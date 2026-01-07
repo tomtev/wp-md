@@ -116,7 +116,7 @@ export async function initCommand(folder) {
 
   if (addAgentInstructions) {
     await createAgentInstructions(resolvedDir);
-    console.log(chalk.green('✓ Claude sub-agent created in .claude/agents/wp-md.md'));
+    console.log(chalk.green('✓ Claude Code skill created in .claude/skills/wp-md/SKILL.md'));
     console.log(chalk.green(`✓ AGENTS.md created in ${folder || '.'}/`));
   }
 
@@ -130,8 +130,8 @@ export async function initCommand(folder) {
 }
 
 async function createAgentInstructions(contentDirPath) {
-  const agentsDir = join(process.cwd(), '.claude', 'agents');
-  await mkdir(agentsDir, { recursive: true });
+  const skillsDir = join(process.cwd(), '.claude', 'skills', 'wp-md');
+  await mkdir(skillsDir, { recursive: true });
   await mkdir(contentDirPath, { recursive: true });
 
   // Get relative path for documentation
@@ -402,15 +402,14 @@ wp-md watch --poll 30   # Auto-sync bidirectionally
 3. Or use \`wp-md watch --poll 30\` for automatic bidirectional sync
 `;
 
-  // Claude Code sub-agent with YAML frontmatter
-  const claudeAgent = `---
+  // Claude Code skill with YAML frontmatter
+  const claudeSkill = `---
 name: wp-md
-description: wp-md syncs WordPress content as local markdown files. Use this agent for editing pages, posts, patterns, templates, and WooCommerce products as files.
-tools: Read, Edit, Write, Bash, Glob, Grep
+description: Build and edit remote WordPress content using local markdown files. Use when working with WordPress pages, posts, templates, patterns, or WooCommerce products.
 ---
 
 ${agentMarkdown}`;
 
-  await writeFile(join(agentsDir, 'wp-md.md'), claudeAgent);
+  await writeFile(join(skillsDir, 'SKILL.md'), claudeSkill);
   await writeFile(join(contentDirPath, 'AGENTS.md'), agentMarkdown);
 }

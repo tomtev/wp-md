@@ -220,9 +220,9 @@ project/
 
 ## AI Code Agents
 
-When you run `wp-md init`, it creates agent instructions for AI coding assistants:
+When you run `wp-md init`, it creates instructions for AI coding assistants:
 
-- **Claude Code**: `.claude/agents/wp-md.md` (sub-agent)
+- **Claude Code**: `.claude/skills/wp-md/SKILL.md` (skill)
 - **Cursor & others**: `content/AGENTS.md`
 
 These files teach AI assistants how to work with WordPress content, including Gutenberg block syntax and wp-md commands.
