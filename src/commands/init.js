@@ -145,22 +145,26 @@ You are a WordPress content specialist working with wp-md. Content is stored as 
 
 All WordPress content is in \`${contentDir}/\`:
 
-- \`${contentDir}/posts/\` - Blog posts
-- \`${contentDir}/pages/\` - Pages
-- \`${contentDir}/navigations/\` - Navigation menus
-- \`${contentDir}/templates/\` - FSE templates (single, archive, 404, etc.)
-- \`${contentDir}/template-parts/\` - Header, footer, sidebar
-- \`${contentDir}/patterns/\` - Reusable block patterns
-- \`${contentDir}/media/\` - Media metadata (not actual files)
-- \`${contentDir}/theme/\` - Theme settings & styles (split by section)
-- \`${contentDir}/taxonomies/\` - Categories and tags
-
-### WooCommerce (if installed)
-
-- \`${contentDir}/woocommerce/products/\` - Products (including variations)
-- \`${contentDir}/woocommerce/categories/\` - Product categories
-- \`${contentDir}/woocommerce/tags/\` - Product tags
-- \`${contentDir}/woocommerce/brands/\` - Product brands
+\`\`\`
+${contentDir}/
+├── posts/                # Blog posts
+├── pages/                # Pages
+├── navigations/          # Navigation menus
+├── templates/            # FSE templates (single, archive, 404, etc.)
+├── template-parts/       # Header, footer, sidebar
+├── patterns/             # Reusable block patterns
+├── media/                # Media metadata
+├── taxonomies/           # Categories and tags
+├── theme/                # Theme settings & styles
+│   ├── settings-color.md
+│   ├── settings-typography.md
+│   └── styles-blocks.md
+└── woocommerce/          # (if WooCommerce installed)
+    ├── products/         # Products with variations
+    ├── categories/
+    ├── tags/
+    └── brands/
+\`\`\`
 
 ## WooCommerce Product Format
 
