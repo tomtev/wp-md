@@ -12,7 +12,7 @@ NC='\033[0m' # No Color
 # Configuration
 REPO="tomtev/wp-md"
 INSTALL_DIR="${WP_MD_INSTALL_DIR:-$HOME/.wp-md}"
-BIN_DIR="/usr/local/bin"
+BIN_DIR="$HOME/.local/bin"
 
 print_banner() {
     echo ""
@@ -156,12 +156,9 @@ install_via_github() {
     info "Installing dependencies..."
     npm install --omit=dev --silent
 
-    # Create symlink (may need sudo for /usr/local/bin)
-    if [ -w "$BIN_DIR" ]; then
-        ln -sf "$INSTALL_DIR/bin/cli.js" "$BIN_DIR/wp-md"
-    else
-        sudo ln -sf "$INSTALL_DIR/bin/cli.js" "$BIN_DIR/wp-md"
-    fi
+    # Create bin directory and symlink
+    mkdir -p "$BIN_DIR"
+    ln -sf "$INSTALL_DIR/bin/cli.js" "$BIN_DIR/wp-md"
     chmod +x "$INSTALL_DIR/bin/cli.js"
 
     # Cleanup
@@ -245,14 +242,15 @@ main() {
 
     echo ""
     install_via_github
+    setup_path
 
     echo ""
     success "wp-md installed!"
     echo ""
     echo -e "${GREEN}Get started:${NC}"
     echo ""
+    echo "  exec \$SHELL"
     echo "  wp-md init"
-    echo "  wp-md pull"
     echo ""
 }
 
