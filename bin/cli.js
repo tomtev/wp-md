@@ -10,11 +10,15 @@ import { watchCommand } from '../src/commands/watch.js';
 import { newCommand } from '../src/commands/new.js';
 import { uploadCommand } from '../src/commands/upload.js';
 import { forcePushCommand } from '../src/commands/force-push.js';
+import { checkForUpdates, getCurrentVersion } from '../src/utils/version-check.js';
+
+// Check for updates in background
+checkForUpdates();
 
 program
   .name('wp-md')
   .description('WordPress content as markdown files for AI agents')
-  .version('1.0.0');
+  .version(getCurrentVersion());
 
 program
   .command('init')
