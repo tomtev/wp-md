@@ -1,0 +1,7 @@
+node_modules/
+content/
+.env
+.wpsyncrc.json
+.wpsync-state.json
+.DS_Store
+*.log
