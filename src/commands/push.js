@@ -4,7 +4,7 @@ import chalk from 'chalk';
 import ora from 'ora';
 import { loadConfig, CONTENT_TYPES, loadState, saveState } from '../config.js';
 import { WordPressClient } from '../api/wordpress.js';
-import { markdownToWp, markdownToWcProduct, parseVariationData, hashContent } from '../sync/content.js';
+import { markdownToWp, markdownToWcProduct, parseVariationData, hashContent, parseThemeMarkdown, mergeThemeSections, THEME_FILES } from '../sync/content.js';
 
 export async function pushCommand(options) {
   const config = await loadConfig();
@@ -25,15 +25,37 @@ export async function pushCommand(options) {
 
   const changes = await findChangedFiles(contentDir, state, options.type, options.file);
 
-  if (changes.length === 0) {
+  // Check for theme file changes
+  const themeChanges = await findChangedThemeFiles(contentDir, state, options.file);
+
+  if (changes.length === 0 && themeChanges.length === 0) {
     console.log(chalk.dim('No changes to push.'));
     return;
   }
 
-  console.log(`Found ${changes.length} file(s) to push:\n`);
+  const totalChanges = changes.length + (themeChanges.length > 0 ? 1 : 0);
+  console.log(`Found ${totalChanges} item(s) to push:\n`);
 
   let pushed = 0;
   let failed = 0;
+
+  // Handle theme files (merge and push together)
+  if (themeChanges.length > 0) {
+    const spinner = ora('theme/ (global styles)').start();
+
+    if (options.dryRun) {
+      spinner.info(`Would push: ${themeChanges.length} theme files`);
+    } else {
+      try {
+        await pushThemeFiles(client, contentDir, state, themeChanges);
+        spinner.succeed(`theme/ (${themeChanges.length} files merged)`);
+        pushed++;
+      } catch (error) {
+        spinner.fail(`theme/: ${error.message}`);
+        failed++;
+      }
+    }
+  }
 
   for (const change of changes) {
     const spinner = ora(`${change.relativePath}`).start();
@@ -200,4 +222,92 @@ async function pushWcProduct(client, content, spinner) {
     id: parsed.id,
     variationsUpdated,
   };
+}
+
+async function findChangedThemeFiles(contentDir, state, filterFile) {
+  const changes = [];
+  const themeDir = join(process.cwd(), contentDir, 'theme');
+
+  let files;
+  try {
+    files = await readdir(themeDir);
+  } catch {
+    return changes;
+  }
+
+  for (const file of files) {
+    if (!file.endsWith('.md')) continue;
+
+    // Check if this is a known theme section file
+    const section = file.replace('.md', '');
+    if (!THEME_FILES[section]) continue;
+
+    const filepath = join(themeDir, file);
+    const relativePath = join(contentDir, 'theme', file);
+
+    if (filterFile && !relativePath.includes(filterFile)) continue;
+
+    const content = await readFile(filepath, 'utf-8');
+    const hash = hashContent(content);
+
+    const existingState = state.files[relativePath];
+    if (!existingState || existingState.localHash !== hash) {
+      changes.push({
+        filepath,
+        relativePath,
+        section,
+        content,
+        hash,
+      });
+    }
+  }
+
+  return changes;
+}
+
+async function pushThemeFiles(client, contentDir, state, themeChanges) {
+  const themeDir = join(process.cwd(), contentDir, 'theme');
+
+  // Read all theme files (not just changed ones) to get complete picture
+  const files = await readdir(themeDir);
+  const sections = [];
+  let globalStylesId = null;
+
+  for (const file of files) {
+    if (!file.endsWith('.md')) continue;
+    const section = file.replace('.md', '');
+    if (!THEME_FILES[section]) continue;
+
+    const filepath = join(themeDir, file);
+    const content = await readFile(filepath, 'utf-8');
+    const parsed = parseThemeMarkdown(content);
+
+    if (parsed.id && !globalStylesId) {
+      globalStylesId = parsed.id;
+    }
+
+    sections.push(parsed);
+  }
+
+  if (!globalStylesId) {
+    throw new Error('No global styles ID found in theme files');
+  }
+
+  // Merge all sections into global styles format
+  const merged = mergeThemeSections(sections);
+
+  // Push to WordPress
+  await client.updateGlobalStyles(globalStylesId, merged);
+
+  // Update state for changed files
+  for (const change of themeChanges) {
+    state.files[change.relativePath] = {
+      id: globalStylesId,
+      type: 'wp_global_styles',
+      section: change.section,
+      localHash: change.hash,
+      remoteHash: change.hash,
+      lastSync: new Date().toISOString(),
+    };
+  }
 }

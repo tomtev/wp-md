@@ -249,11 +249,9 @@ main() {
     echo ""
     echo -e "${GREEN}Get started:${NC}"
     echo ""
-    echo "  cd your-project    # where you want the markdown files"
-    echo "  ~/.local/bin/wp-md init"
-    echo "  ~/.local/bin/wp-md pull"
-    echo ""
-    echo -e "${CYAN}Tip:${NC} Run 'exec \$SHELL' to use 'wp-md' without the full path."
+    echo "  cd your-project"
+    echo "  wp-md init"
+    echo "  wp-md pull"
     echo ""
 }
 

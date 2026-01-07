@@ -67,7 +67,13 @@ content/
 │   ├── tags/
 │   └── brands/
 └── theme/
-    └── global-styles.json
+    ├── settings-color.md
+    ├── settings-typography.md
+    ├── settings-spacing.md
+    ├── settings-layout.md
+    ├── styles-color.md
+    ├── styles-elements.md
+    └── styles-blocks.md
 ```
 
 ## File Format

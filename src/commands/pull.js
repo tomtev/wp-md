@@ -4,7 +4,7 @@ import chalk from 'chalk';
 import ora from 'ora';
 import { loadConfig, CONTENT_TYPES, TAXONOMY_TYPES, loadState, saveState } from '../config.js';
 import { WordPressClient } from '../api/wordpress.js';
-import { wpToMarkdown, mediaToMarkdown, taxonomyToMarkdown, wcProductToMarkdown, generateFilename, hashContent } from '../sync/content.js';
+import { wpToMarkdown, mediaToMarkdown, taxonomyToMarkdown, wcProductToMarkdown, generateFilename, hashContent, THEME_FILES, extractThemeSection, themeSettingToMarkdown } from '../sync/content.js';
 
 export async function pullCommand(options) {
   const config = await loadConfig();
@@ -37,13 +37,13 @@ export async function pullCommand(options) {
     const spinner = ora(`Fetching ${typeConfig.label}...`).start();
 
     try {
-      // Special handling for global styles
+      // Special handling for global styles (split into multiple files)
       if (type === 'wp_global_styles') {
         const result = await pullGlobalStyles(client, contentDir, state, options.force);
-        if (result.isNew) newFiles++;
+        if (result.isNew) newFiles += result.filesCreated;
         else if (result.isChanged) updatedFiles++;
-        if (result.success) totalFiles++;
-        spinner.succeed(`${typeConfig.label}: ${result.theme}`);
+        totalFiles += result.filesCreated;
+        spinner.succeed(`${typeConfig.label}: ${result.filesCreated} files (${result.theme})`);
         continue;
       }
 
@@ -179,43 +179,51 @@ async function pullGlobalStyles(client, contentDir, state, force) {
   const themeDir = join(process.cwd(), contentDir, 'theme');
   await mkdir(themeDir, { recursive: true });
 
-  // Save as theme.json format
-  const themeJson = {
-    $schema: 'https://schemas.wp.org/trunk/theme.json',
-    version: 3,
-    settings: globalStyles.settings,
-    styles: globalStyles.styles,
-    _wp_md: {
-      id: globalStyles.id,
-      theme: globalStyles.theme,
-    },
-  };
+  let filesCreated = 0;
+  let isNew = false;
+  let isChanged = false;
 
-  const content = JSON.stringify(themeJson, null, 2);
-  const hash = hashContent(content);
-  const filepath = join(themeDir, 'global-styles.json');
-  const relativePath = join(contentDir, 'theme', 'global-styles.json');
+  // Create separate files for each theme section
+  for (const key of Object.keys(THEME_FILES)) {
+    const sectionData = extractThemeSection(globalStyles, key);
+    if (!sectionData) continue;
 
-  const existingState = state.files[relativePath];
-  const isNew = !existingState;
-  const isChanged = existingState && existingState.remoteHash !== hash;
+    const markdown = themeSettingToMarkdown(key, sectionData, globalStyles.id, globalStyles.theme);
+    if (!markdown) continue;
 
-  if (isNew || isChanged || force) {
-    await writeFile(filepath, content);
+    const filename = `${key}.md`;
+    const filepath = join(themeDir, filename);
+    const relativePath = join(contentDir, 'theme', filename);
+    const hash = hashContent(markdown);
 
-    state.files[relativePath] = {
-      id: globalStyles.id,
-      type: 'wp_global_styles',
-      theme: globalStyles.theme,
-      localHash: hash,
-      remoteHash: hash,
-      lastSync: new Date().toISOString(),
-    };
+    const existingState = state.files[relativePath];
+    const fileIsNew = !existingState;
+    const fileIsChanged = existingState && existingState.remoteHash !== hash;
+
+    if (fileIsNew) isNew = true;
+    if (fileIsChanged) isChanged = true;
+
+    if (fileIsNew || fileIsChanged || force) {
+      await writeFile(filepath, markdown);
+
+      state.files[relativePath] = {
+        id: globalStyles.id,
+        type: 'wp_global_styles',
+        section: key,
+        theme: globalStyles.theme,
+        localHash: hash,
+        remoteHash: hash,
+        lastSync: new Date().toISOString(),
+      };
+    }
+
+    filesCreated++;
   }
 
   return {
     success: true,
     theme: globalStyles.theme,
+    filesCreated,
     isNew,
     isChanged,
   };

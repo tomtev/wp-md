@@ -426,3 +426,160 @@ export function parseVariationData(variation) {
 
   return data;
 }
+
+/**
+ * Theme settings/styles file definitions
+ */
+export const THEME_FILES = {
+  'settings-color': {
+    path: 'settings.color',
+    label: 'Color Settings',
+    description: 'Color palette, gradients, duotone',
+  },
+  'settings-typography': {
+    path: 'settings.typography',
+    label: 'Typography Settings',
+    description: 'Font families and sizes',
+  },
+  'settings-spacing': {
+    path: 'settings.spacing',
+    label: 'Spacing Settings',
+    description: 'Spacing scale and units',
+  },
+  'settings-layout': {
+    path: 'settings.layout',
+    label: 'Layout Settings',
+    description: 'Content and wide width',
+  },
+  'settings-other': {
+    path: 'settings',
+    label: 'Other Settings',
+    description: 'Border, shadow, dimensions, etc.',
+    exclude: ['color', 'typography', 'spacing', 'layout'],
+  },
+  'styles-color': {
+    path: 'styles.color',
+    label: 'Color Styles',
+    description: 'Background and text colors',
+  },
+  'styles-typography': {
+    path: 'styles.typography',
+    label: 'Typography Styles',
+    description: 'Font styles',
+  },
+  'styles-spacing': {
+    path: 'styles.spacing',
+    label: 'Spacing Styles',
+    description: 'Padding, margin, gap',
+  },
+  'styles-elements': {
+    path: 'styles.elements',
+    label: 'Element Styles',
+    description: 'Links, headings, buttons',
+  },
+  'styles-blocks': {
+    path: 'styles.blocks',
+    label: 'Block Styles',
+    description: 'Per-block style overrides',
+  },
+};
+
+/**
+ * Convert global styles section to markdown file
+ */
+export function themeSettingToMarkdown(key, data, globalStylesId, theme) {
+  const config = THEME_FILES[key];
+  if (!config) return null;
+
+  const fm = {
+    type: 'theme',
+    section: key,
+    _wp_md: {
+      id: globalStylesId,
+      theme: theme,
+    },
+  };
+
+  // Add the actual data to frontmatter
+  Object.assign(fm, data);
+
+  return `---\n${YAML.stringify(fm).trim()}\n---\n`;
+}
+
+/**
+ * Extract section data from global styles
+ */
+export function extractThemeSection(globalStyles, key) {
+  const config = THEME_FILES[key];
+  if (!config) return null;
+
+  const parts = config.path.split('.');
+  let data = globalStyles;
+
+  for (const part of parts) {
+    if (!data || typeof data !== 'object') return null;
+    data = data[part];
+  }
+
+  if (!data || Object.keys(data).length === 0) return null;
+
+  // Handle 'other' sections that exclude specific keys
+  if (config.exclude) {
+    const filtered = {};
+    for (const [k, v] of Object.entries(data)) {
+      if (!config.exclude.includes(k)) {
+        filtered[k] = v;
+      }
+    }
+    if (Object.keys(filtered).length === 0) return null;
+    return filtered;
+  }
+
+  return data;
+}
+
+/**
+ * Parse theme markdown file back to section data
+ */
+export function parseThemeMarkdown(fileContent) {
+  const { frontmatter } = parseFrontmatter(fileContent);
+
+  const { type, section, _wp_md, ...data } = frontmatter;
+
+  return {
+    section,
+    id: _wp_md?.id,
+    theme: _wp_md?.theme,
+    data,
+  };
+}
+
+/**
+ * Merge multiple theme sections back into global styles format
+ */
+export function mergeThemeSections(sections) {
+  const result = {
+    settings: {},
+    styles: {},
+  };
+
+  for (const { section, data } of sections) {
+    const config = THEME_FILES[section];
+    if (!config || !data) continue;
+
+    const parts = config.path.split('.');
+    const topLevel = parts[0]; // 'settings' or 'styles'
+    const subKey = parts[1]; // 'color', 'typography', etc.
+
+    if (subKey) {
+      // Handle 'other' which merges multiple keys
+      if (config.exclude) {
+        Object.assign(result[topLevel], data);
+      } else {
+        result[topLevel][subKey] = data;
+      }
+    }
+  }
+
+  return result;
+}

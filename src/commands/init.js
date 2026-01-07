@@ -145,7 +145,7 @@ All WordPress content is in \`${contentDir}/\`:
 - \`${contentDir}/template-parts/\` - Header, footer, sidebar
 - \`${contentDir}/patterns/\` - Reusable block patterns
 - \`${contentDir}/media/\` - Media metadata (not actual files)
-- \`${contentDir}/theme/global-styles.json\` - Theme styles (colors, fonts, spacing)
+- \`${contentDir}/theme/\` - Theme settings & styles (split by section)
 - \`${contentDir}/taxonomies/\` - Categories and tags
 
 ### WooCommerce (if installed)
@@ -242,6 +242,46 @@ variations:
 \`\`\`
 
 Run \`wp-md push\` to create the variation on WordPress.
+
+## Theme Files
+
+Theme settings and styles are split into focused markdown files:
+
+\`\`\`
+theme/
+  settings-color.md      # Color palette, gradients
+  settings-typography.md # Font families, sizes
+  settings-spacing.md    # Spacing scale
+  settings-layout.md     # Content width, wide width
+  styles-color.md        # Background, text colors
+  styles-elements.md     # Link, heading, button styles
+  styles-blocks.md       # Per-block style overrides
+\`\`\`
+
+Example \`settings-color.md\`:
+
+\`\`\`markdown
+---
+type: theme
+section: settings-color
+_wp_md:
+  id: 123
+  theme: theme-name
+palette:
+  - name: Primary
+    slug: primary
+    color: "#0073aa"
+  - name: Secondary
+    slug: secondary
+    color: "#23282d"
+gradients:
+  - name: Vivid cyan
+    slug: vivid-cyan
+    gradient: "linear-gradient(135deg,#0073aa,#23282d)"
+---
+\`\`\`
+
+When pushing, all theme files are merged and sent as a single global-styles update.
 
 ## File Format
 
