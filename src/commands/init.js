@@ -3,10 +3,10 @@ import chalk from 'chalk';
 import ora from 'ora';
 import { writeFile, mkdir } from 'fs/promises';
 import { join } from 'path';
-import { saveConfig, configExists, loadConfig } from '../config.js';
+import { saveConfig, configExists, loadConfig, resolveContentDir } from '../config.js';
 import { WordPressClient } from '../api/wordpress.js';
 
-export async function initCommand() {
+export async function initCommand(folder) {
   console.log('');
   console.log(chalk.bold.cyan('  ╦ ╦╔═╗   ╔╦╗╔╦╗'));
   console.log(chalk.bold.cyan('  ║║║╠═╝───║║║ ║║'));
@@ -15,10 +15,19 @@ export async function initCommand() {
   console.log(chalk.dim('  Create & edit remote WordPress content as markdown files locally.'));
   console.log('');
 
+  // Use folder argument or current directory
+  const targetDir = folder || '.';
+  const resolvedDir = resolveContentDir(targetDir);
+
+  if (folder) {
+    console.log(chalk.dim(`  Setting up in: ${folder}/`));
+    console.log('');
+  }
+
   let existingConfig = null;
 
-  if (await configExists()) {
-    existingConfig = await loadConfig();
+  if (await configExists(targetDir)) {
+    existingConfig = await loadConfig(targetDir);
     const { overwrite } = await inquirer.prompt([
       {
         type: 'confirm',
@@ -65,13 +74,6 @@ export async function initCommand() {
       suffix: chalk.dim(' (WP Admin → Users → Profile → Application Passwords)'),
       validate: (input) => input.length > 0 || 'Application password is required',
     },
-    {
-      type: 'input',
-      name: 'contentDir',
-      message: 'Local content directory:',
-      suffix: chalk.dim(' (folder to store synced content)'),
-      default: existingConfig?.contentDir || 'content',
-    },
   ]);
 
   const spinner = ora('Testing connection...').start();
@@ -96,10 +98,10 @@ export async function initCommand() {
     siteUrl: answers.siteUrl,
     username: answers.username,
     appPassword: answers.appPassword,
-    contentDir: answers.contentDir,
-  });
+  }, targetDir);
 
-  console.log(chalk.green('\n✓ Credentials saved to .env'));
+  const envPath = folder ? `${folder}/.env` : '.env';
+  console.log(chalk.green(`\n✓ Credentials saved to ${envPath}`));
 
   // Ask about AI agent instructions
   const { addAgentInstructions } = await inquirer.prompt([
@@ -113,22 +115,27 @@ export async function initCommand() {
   ]);
 
   if (addAgentInstructions) {
-    await createAgentInstructions(answers.contentDir);
+    await createAgentInstructions(resolvedDir);
     console.log(chalk.green('✓ Claude sub-agent created in .claude/agents/wp-md.md'));
-    console.log(chalk.green(`✓ AGENTS.md created in ${answers.contentDir}/`));
+    console.log(chalk.green(`✓ AGENTS.md created in ${folder || '.'}/`));
   }
 
   console.log(chalk.dim('\n  (Add .env to .gitignore to protect credentials)\n'));
   console.log('Next steps:');
-  console.log(chalk.cyan('  wp-md pull        ') + '# Download all content');
-  console.log(chalk.cyan('  wp-md pull -t post') + '# Download only posts');
+  if (folder) {
+    console.log(chalk.cyan(`  wp-md pull -d ${folder}`) + '  # Download all content');
+  } else {
+    console.log(chalk.cyan('  wp-md pull') + '           # Download all content');
+  }
 }
 
-async function createAgentInstructions(contentDir) {
+async function createAgentInstructions(contentDirPath) {
   const agentsDir = join(process.cwd(), '.claude', 'agents');
-  const contentDirPath = join(process.cwd(), contentDir);
   await mkdir(agentsDir, { recursive: true });
   await mkdir(contentDirPath, { recursive: true });
+
+  // Get relative path for documentation
+  const contentDir = contentDirPath.replace(process.cwd() + '/', '') || '.';
 
   const agentMarkdown = `# wp-md Agent Instructions
 

@@ -39,19 +39,32 @@ wp-md push
 
 | Command | Description |
 |---------|-------------|
-| `wp-md init` | Configure WordPress connection |
+| `wp-md init [folder]` | Configure WordPress connection |
 | `wp-md pull` | Download content from WordPress |
 | `wp-md push` | Upload local changes to WordPress |
 | `wp-md status` | Show sync status |
-| `wp-md watch` | Watch for local changes |
+| `wp-md watch` | Watch for changes and auto-sync |
 | `wp-md new <type> <title>` | Create new content |
 | `wp-md upload <file>` | Upload media file |
 | `wp-md force-push` | Push all content (creates missing) |
 
+All commands support `-d, --dir <directory>` to specify a content directory.
+
+### Watch Options
+
+```bash
+wp-md watch              # Watch current directory
+wp-md watch -d site-a    # Watch specific site
+wp-md watch --all        # Watch all sites in folder
+wp-md watch --server     # Start WebSocket server for browser extension
+wp-md watch --all -s     # Watch all sites + WebSocket
+```
+
 ## Content Structure
 
 ```
-content/
+your-site/
+├── .env                  # WordPress credentials
 ├── post-types/
 │   ├── post/
 │   ├── page/
@@ -62,17 +75,13 @@ content/
 ├── media/
 ├── taxonomies/
 ├── woocommerce/
-│   ├── products/        # Products with variations embedded
+│   ├── products/         # Products with variations
 │   ├── categories/
 │   ├── tags/
 │   └── brands/
 └── theme/
     ├── settings-color.md
     ├── settings-typography.md
-    ├── settings-spacing.md
-    ├── settings-layout.md
-    ├── styles-color.md
-    ├── styles-elements.md
     └── styles-blocks.md
 ```
 
@@ -160,14 +169,13 @@ wp-md uses [WordPress Application Passwords](https://make.wordpress.org/core/202
 
 ## Configuration
 
-`wp-md init` creates a `.env` file with your credentials. You can also create it manually:
+`wp-md init` creates a `.env` file with your credentials:
 
 ```bash
 # .env
 WP_MD_URL=https://your-site.com
 WP_MD_USER=your-username
 WP_MD_APP_PASSWORD=xxxx xxxx xxxx xxxx xxxx xxxx
-WP_MD_CONTENT_DIR=content
 ```
 
 | Variable | Description |
@@ -175,9 +183,40 @@ WP_MD_CONTENT_DIR=content
 | `WP_MD_URL` | Your WordPress site URL |
 | `WP_MD_USER` | WordPress username (admin) |
 | `WP_MD_APP_PASSWORD` | Application password from WordPress |
-| `WP_MD_CONTENT_DIR` | Local folder for markdown files (default: `content`) |
 
 **Note:** Add `.env` to your `.gitignore` to protect credentials.
+
+## Multiple Sites
+
+Manage multiple WordPress sites in one project folder:
+
+```bash
+# Initialize each site in its own folder
+wp-md init site-a
+wp-md init site-b
+
+# Pull/push with -d flag
+wp-md pull -d site-a
+wp-md push -d site-b
+
+# Or cd into the folder
+cd site-a && wp-md pull
+```
+
+Each folder contains its own `.env` and content:
+
+```
+project/
+  site-a/
+    .env              # Site A credentials
+    post-types/
+    templates/
+    theme/
+  site-b/
+    .env              # Site B credentials
+    post-types/
+    ...
+```
 
 ## AI Code Agents
 

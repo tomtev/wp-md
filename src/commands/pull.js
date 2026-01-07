@@ -2,20 +2,21 @@ import { mkdir, writeFile } from 'fs/promises';
 import { join } from 'path';
 import chalk from 'chalk';
 import ora from 'ora';
-import { loadConfig, CONTENT_TYPES, TAXONOMY_TYPES, loadState, saveState } from '../config.js';
+import { loadConfig, CONTENT_TYPES, TAXONOMY_TYPES, loadState, saveState, resolveContentDir } from '../config.js';
 import { WordPressClient } from '../api/wordpress.js';
 import { wpToMarkdown, mediaToMarkdown, taxonomyToMarkdown, wcProductToMarkdown, generateFilename, hashContent, THEME_FILES, extractThemeSection, themeSettingToMarkdown } from '../sync/content.js';
 
 export async function pullCommand(options) {
-  const config = await loadConfig();
+  const dir = options.dir;
+  const config = await loadConfig(dir);
   if (!config) {
-    console.log(chalk.red('No configuration found. Run `wp-sync init` first.'));
+    console.log(chalk.red('No configuration found. Run `wp-md init` first.'));
     return;
   }
 
   const client = new WordPressClient(config);
-  const state = await loadState();
-  const contentDir = config.contentDir || 'content';
+  const state = await loadState(dir);
+  const contentDir = resolveContentDir(dir);
 
   const typesToPull = options.type === 'all'
     ? Object.keys(CONTENT_TYPES)
@@ -60,13 +61,13 @@ export async function pullCommand(options) {
       const items = await client.fetchAll(type);
       spinner.text = `Processing ${items.length} ${typeConfig.label.toLowerCase()}...`;
 
-      const typeDir = join(process.cwd(), contentDir, typeConfig.folder);
+      const typeDir = join(contentDir, typeConfig.folder);
       await mkdir(typeDir, { recursive: true });
 
       for (const item of items) {
         const filename = generateFilename(item);
         const filepath = join(typeDir, filename);
-        const relativePath = join(contentDir, typeConfig.folder, filename);
+        const relativePath = join(typeConfig.folder, filename);
 
         // Use mediaToMarkdown for attachments, wpToMarkdown for others
         const markdown = typeConfig.isMedia
@@ -123,13 +124,13 @@ export async function pullCommand(options) {
 
       spinner.text = `Processing ${items.length} ${taxConfig.label.toLowerCase()}...`;
 
-      const taxDir = join(process.cwd(), contentDir, taxConfig.folder);
+      const taxDir = join(contentDir, taxConfig.folder);
       await mkdir(taxDir, { recursive: true });
 
       for (const item of items) {
         const filename = `${item.slug}.md`;
         const filepath = join(taxDir, filename);
-        const relativePath = join(contentDir, taxConfig.folder, filename);
+        const relativePath = join(taxConfig.folder, filename);
 
         const markdown = taxonomyToMarkdown(item, taxonomy);
         const hash = hashContent(markdown);
@@ -163,7 +164,7 @@ export async function pullCommand(options) {
   }
 
   state.lastSync = new Date().toISOString();
-  await saveState(state);
+  await saveState(state, dir);
 
   console.log(chalk.bold('\n📊 Summary'));
   console.log(`   Total: ${totalFiles} files`);
@@ -176,7 +177,7 @@ export async function pullCommand(options) {
 async function pullGlobalStyles(client, contentDir, state, force) {
   const globalStyles = await client.fetchGlobalStyles();
 
-  const themeDir = join(process.cwd(), contentDir, 'theme');
+  const themeDir = join(contentDir, 'theme');
   await mkdir(themeDir, { recursive: true });
 
   let filesCreated = 0;
@@ -193,7 +194,7 @@ async function pullGlobalStyles(client, contentDir, state, force) {
 
     const filename = `${key}.md`;
     const filepath = join(themeDir, filename);
-    const relativePath = join(contentDir, 'theme', filename);
+    const relativePath = join('theme', filename);
     const hash = hashContent(markdown);
 
     const existingState = state.files[relativePath];
@@ -245,7 +246,7 @@ async function pullWcProducts(client, contentDir, state, force, spinner) {
   }
 
   const typeConfig = CONTENT_TYPES.product;
-  const typeDir = join(process.cwd(), contentDir, typeConfig.folder);
+  const typeDir = join(contentDir, typeConfig.folder);
   await mkdir(typeDir, { recursive: true });
 
   spinner.text = 'Fetching products via WooCommerce API...';
@@ -263,7 +264,7 @@ async function pullWcProducts(client, contentDir, state, force, spinner) {
 
     const filename = `${product.slug}.md`;
     const filepath = join(typeDir, filename);
-    const relativePath = join(contentDir, typeConfig.folder, filename);
+    const relativePath = join(typeConfig.folder, filename);
 
     const markdown = wcProductToMarkdown(product, variations);
     const hash = hashContent(markdown);

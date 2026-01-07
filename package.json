@@ -1,6 +1,6 @@
 {
   "name": "wp-md",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "WordPress content as markdown files for AI agents",
   "type": "module",
   "bin": {
@@ -41,6 +41,7 @@
     "commander": "^12.0.0",
     "inquirer": "^9.2.12",
     "ora": "^8.0.1",
+    "ws": "^8.16.0",
     "yaml": "^2.3.4"
   }
 }

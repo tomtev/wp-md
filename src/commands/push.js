@@ -2,20 +2,21 @@ import { readFile, readdir } from 'fs/promises';
 import { join } from 'path';
 import chalk from 'chalk';
 import ora from 'ora';
-import { loadConfig, CONTENT_TYPES, loadState, saveState } from '../config.js';
+import { loadConfig, CONTENT_TYPES, loadState, saveState, resolveContentDir } from '../config.js';
 import { WordPressClient } from '../api/wordpress.js';
 import { markdownToWp, markdownToWcProduct, parseVariationData, hashContent, parseThemeMarkdown, mergeThemeSections, THEME_FILES } from '../sync/content.js';
 
 export async function pushCommand(options) {
-  const config = await loadConfig();
+  const dir = options.dir;
+  const config = await loadConfig(dir);
   if (!config) {
-    console.log(chalk.red('No configuration found. Run `wp-sync init` first.'));
+    console.log(chalk.red('No configuration found. Run `wp-md init` first.'));
     return;
   }
 
   const client = new WordPressClient(config);
-  const state = await loadState();
-  const contentDir = config.contentDir || 'content';
+  const state = await loadState(dir);
+  const contentDir = resolveContentDir(dir);
 
   console.log(chalk.bold('\n📤 Pushing changes to WordPress\n'));
 
@@ -114,7 +115,7 @@ export async function pushCommand(options) {
   }
 
   if (!options.dryRun) {
-    await saveState(state);
+    await saveState(state, dir);
   }
 
   console.log(chalk.bold('\n📊 Summary'));
@@ -136,7 +137,7 @@ async function findChangedFiles(contentDir, state, filterType, filterFile) {
     const typeConfig = CONTENT_TYPES[type];
     if (!typeConfig) continue;
 
-    const typeDir = join(process.cwd(), contentDir, typeConfig.folder);
+    const typeDir = join(contentDir, typeConfig.folder);
 
     let files;
     try {
@@ -149,7 +150,7 @@ async function findChangedFiles(contentDir, state, filterType, filterFile) {
       if (!file.endsWith('.md')) continue;
 
       const filepath = join(typeDir, file);
-      const relativePath = join(contentDir, typeConfig.folder, file);
+      const relativePath = join(typeConfig.folder, file);
 
       if (filterFile && !relativePath.includes(filterFile)) continue;
 
@@ -226,7 +227,7 @@ async function pushWcProduct(client, content, spinner) {
 
 async function findChangedThemeFiles(contentDir, state, filterFile) {
   const changes = [];
-  const themeDir = join(process.cwd(), contentDir, 'theme');
+  const themeDir = join(contentDir, 'theme');
 
   let files;
   try {
@@ -243,7 +244,7 @@ async function findChangedThemeFiles(contentDir, state, filterFile) {
     if (!THEME_FILES[section]) continue;
 
     const filepath = join(themeDir, file);
-    const relativePath = join(contentDir, 'theme', file);
+    const relativePath = join('theme', file);
 
     if (filterFile && !relativePath.includes(filterFile)) continue;
 
@@ -266,7 +267,7 @@ async function findChangedThemeFiles(contentDir, state, filterFile) {
 }
 
 async function pushThemeFiles(client, contentDir, state, themeChanges) {
-  const themeDir = join(process.cwd(), contentDir, 'theme');
+  const themeDir = join(contentDir, 'theme');
 
   // Read all theme files (not just changed ones) to get complete picture
   const files = await readdir(themeDir);

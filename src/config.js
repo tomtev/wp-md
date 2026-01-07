@@ -1,9 +1,16 @@
-import { readFile, writeFile, access } from 'fs/promises';
-import { join } from 'path';
+import { readFile, writeFile, access, mkdir } from 'fs/promises';
+import { join, resolve } from 'path';
 
 const ENV_FILE = '.env';
-const CONFIG_FILE = '.wpmdrc.json';
 const STATE_FILE = '.wpmd-state.json';
+
+/**
+ * Resolve the content directory path
+ */
+export function resolveContentDir(dir) {
+  if (!dir) return process.cwd();
+  return resolve(process.cwd(), dir);
+}
 
 // Using WordPress post type slugs
 export const CONTENT_TYPES = {
@@ -31,18 +38,13 @@ export const TAXONOMY_TYPES = {
   product_brand: { endpoint: 'product_brand', folder: 'woocommerce/brands', label: 'Product Brands' },
 };
 
-export async function configExists() {
+export async function configExists(dir) {
+  const baseDir = resolveContentDir(dir);
   try {
-    await access(join(process.cwd(), ENV_FILE));
+    await access(join(baseDir, ENV_FILE));
     return true;
   } catch {
-    // Fallback to old config file
-    try {
-      await access(join(process.cwd(), CONFIG_FILE));
-      return true;
-    } catch {
-      return false;
-    }
+    return false;
   }
 }
 
@@ -65,70 +67,58 @@ function parseEnvFile(content) {
   return env;
 }
 
-export async function loadConfig() {
-  // First try .env file
+export async function loadConfig(dir) {
+  const baseDir = resolveContentDir(dir);
+
   try {
-    const envContent = await readFile(join(process.cwd(), ENV_FILE), 'utf-8');
+    const envContent = await readFile(join(baseDir, ENV_FILE), 'utf-8');
     const env = parseEnvFile(envContent);
 
     if (env.WP_MD_URL && env.WP_MD_USER && env.WP_MD_APP_PASSWORD) {
-      // Load additional config from .wpsyncrc.json if exists
-      let extraConfig = {};
-      try {
-        const configData = await readFile(join(process.cwd(), CONFIG_FILE), 'utf-8');
-        extraConfig = JSON.parse(configData);
-      } catch {}
-
       return {
         siteUrl: env.WP_MD_URL,
         username: env.WP_MD_USER,
         appPassword: env.WP_MD_APP_PASSWORD,
-        contentDir: env.WP_MD_CONTENT_DIR || extraConfig.contentDir || 'content',
+        contentDir: baseDir, // The directory IS the content dir
       };
     }
   } catch {}
 
-  // Fallback to old JSON config
-  try {
-    const data = await readFile(join(process.cwd(), CONFIG_FILE), 'utf-8');
-    return JSON.parse(data);
-  } catch {
-    return null;
-  }
+  return null;
 }
 
-export async function saveConfig(config) {
-  // Save credentials to .env
+export async function saveConfig(config, dir) {
+  const baseDir = resolveContentDir(dir);
+
+  // Create directory if it doesn't exist
+  await mkdir(baseDir, { recursive: true });
+
+  // Save credentials to .env in the content directory
   const envContent = `# wp-md configuration
 # Add this file to .gitignore to protect credentials
 
 WP_MD_URL=${config.siteUrl}
 WP_MD_USER=${config.username}
 WP_MD_APP_PASSWORD=${config.appPassword}
-WP_MD_CONTENT_DIR=${config.contentDir || 'content'}
 `;
 
-  await writeFile(join(process.cwd(), ENV_FILE), envContent);
-
-  // Save non-sensitive config to .wpsyncrc.json
-  await writeFile(
-    join(process.cwd(), CONFIG_FILE),
-    JSON.stringify({ contentDir: config.contentDir || 'content' }, null, 2)
-  );
+  await writeFile(join(baseDir, ENV_FILE), envContent);
 }
 
-export async function loadState() {
+export async function loadState(dir) {
+  const baseDir = resolveContentDir(dir);
   try {
-    const data = await readFile(join(process.cwd(), STATE_FILE), 'utf-8');
+    const data = await readFile(join(baseDir, STATE_FILE), 'utf-8');
     return JSON.parse(data);
   } catch {
     return { files: {}, lastSync: null };
   }
 }
 
-export async function saveState(state) {
+export async function saveState(state, dir) {
+  const baseDir = resolveContentDir(dir);
   await writeFile(
-    join(process.cwd(), STATE_FILE),
+    join(baseDir, STATE_FILE),
     JSON.stringify(state, null, 2)
   );
 }
