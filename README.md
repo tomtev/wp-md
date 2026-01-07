@@ -6,7 +6,7 @@
 ╚╩╝╩     ╩ ╩═╩╝
 ```
 
-**Create & edit remote WordPress content as markdown files locally. Built for AI Code Agents and developers.**
+**Create & edit remote WordPress content as markdown files locally.**
 
 Turn your WordPress site into a local folder of markdown files. Edit pages, posts, patterns, templates, and WooCommerce products with your favorite editor or AI coding assistant.
 
