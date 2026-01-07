@@ -15,9 +15,9 @@ export function resolveContentDir(dir) {
 // Using WordPress post type slugs
 export const CONTENT_TYPES = {
   // Regular post types
-  post: { endpoint: 'posts', folder: 'post-types/post', label: 'Posts', postType: 'post' },
-  page: { endpoint: 'pages', folder: 'post-types/page', label: 'Pages', postType: 'page' },
-  wp_navigation: { endpoint: 'navigation', folder: 'post-types/wp_navigation', label: 'Navigation', postType: 'wp_navigation' },
+  post: { endpoint: 'posts', folder: 'posts', label: 'Posts', postType: 'post' },
+  page: { endpoint: 'pages', folder: 'pages', label: 'Pages', postType: 'page' },
+  wp_navigation: { endpoint: 'navigation', folder: 'navigations', label: 'Navigation', postType: 'wp_navigation' },
   // FSE theme content (top-level folders)
   wp_template: { endpoint: 'templates', folder: 'templates', label: 'Templates', postType: 'wp_template' },
   wp_template_part: { endpoint: 'template-parts', folder: 'template-parts', label: 'Template Parts', postType: 'wp_template_part' },

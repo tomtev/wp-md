@@ -145,9 +145,9 @@ You are a WordPress content specialist working with wp-md. Content is stored as 
 
 All WordPress content is in \`${contentDir}/\`:
 
-- \`${contentDir}/post-types/post/\` - Blog posts
-- \`${contentDir}/post-types/page/\` - Pages
-- \`${contentDir}/post-types/wp_navigation/\` - Navigation menus
+- \`${contentDir}/posts/\` - Blog posts
+- \`${contentDir}/pages/\` - Pages
+- \`${contentDir}/navigations/\` - Navigation menus
 - \`${contentDir}/templates/\` - FSE templates (single, archive, 404, etc.)
 - \`${contentDir}/template-parts/\` - Header, footer, sidebar
 - \`${contentDir}/patterns/\` - Reusable block patterns

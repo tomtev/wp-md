@@ -128,12 +128,15 @@ async function discoverSites(options) {
  * Create file watcher for a single site
  */
 function createSiteWatcher(site, debounceMs, debounceTimers, useWebSocket) {
-  const watcher = chokidar.watch(`${site.dir}/**/*.md`, {
+  const watcher = chokidar.watch(site.dir, {
     persistent: true,
     ignoreInitial: true,
-    awaitWriteFinish: {
-      stabilityThreshold: 500,
-      pollInterval: 100,
+    ignored: (path) => {
+      // Ignore dotfiles and non-md files (but allow directories)
+      const isDir = !path.includes('.');
+      const isMd = path.endsWith('.md');
+      const isDotfile = path.includes('/.');
+      return isDotfile || (!isDir && !isMd);
     },
   });
 

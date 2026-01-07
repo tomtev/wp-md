@@ -65,15 +65,14 @@ wp-md watch --all -s     # Watch all sites + WebSocket
 ```
 your-site/
 ├── .env                  # WordPress credentials
-├── post-types/
-│   ├── post/
-│   ├── page/
-│   └── wp_navigation/
-├── templates/
-├── template-parts/
-├── patterns/
-├── media/
-├── taxonomies/
+├── posts/                # Blog posts
+├── pages/                # Pages
+├── navigations/          # Navigation menus
+├── templates/            # FSE templates
+├── template-parts/       # Header, footer, etc.
+├── patterns/             # Reusable patterns
+├── media/                # Media metadata
+├── taxonomies/           # Categories and tags
 ├── woocommerce/
 │   ├── products/         # Products with variations
 │   ├── categories/
