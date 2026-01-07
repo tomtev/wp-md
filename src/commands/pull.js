@@ -185,10 +185,9 @@ async function pullGlobalStyles(client, contentDir, state, force) {
     version: 3,
     settings: globalStyles.settings,
     styles: globalStyles.styles,
-    _wp_sync: {
+    _wp_md: {
       id: globalStyles.id,
       theme: globalStyles.theme,
-      lastSync: new Date().toISOString(),
     },
   };
 
