@@ -15,14 +15,18 @@ Turn your WordPress site into a local folder of markdown files. Edit pages, post
 ```bash
 # Install
 curl -fsSL https://raw.githubusercontent.com/tomtev/wp-md/main/install.sh | bash
+exec $SHELL
 
-# Initialize in your project
+# Go to your project folder (where you want the markdown files)
+cd your-project
+
+# Connect to your WordPress site
 wp-md init
 
 # Pull all content from WordPress
 wp-md pull
 
-# Edit files, then push changes back
+# Edit files locally, then push changes back
 wp-md push
 ```
 
