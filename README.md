@@ -62,7 +62,7 @@ content/
 ├── media/
 ├── taxonomies/
 ├── woocommerce/
-│   ├── products/
+│   ├── products/        # Products with variations embedded
 │   ├── categories/
 │   ├── tags/
 │   └── brands/
@@ -90,6 +90,40 @@ title: About Us
 <p>Content here using Gutenberg blocks.</p>
 <!-- /wp:paragraph -->
 ```
+
+## WooCommerce Products
+
+Variable products include attributes and variations in the frontmatter:
+
+```yaml
+---
+id: 456
+type: product
+title: T-Shirt
+product_type: variable
+regular_price: "29.99"
+sku: TSHIRT-001
+attributes:
+  - name: Size
+    options: [Small, Medium, Large]
+    variation: true
+variations:
+  - id: 457
+    sku: TSHIRT-SM
+    regular_price: "29.99"
+    attributes:
+      - name: Size
+        option: Small
+  - id: 458
+    sku: TSHIRT-MD
+    regular_price: "29.99"
+    attributes:
+      - name: Size
+        option: Medium
+---
+```
+
+Add new variations by adding entries without `id` and running `wp-md push`.
 
 ## Installation
 

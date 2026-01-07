@@ -4,7 +4,7 @@ import chalk from 'chalk';
 import ora from 'ora';
 import { loadConfig, CONTENT_TYPES, TAXONOMY_TYPES, loadState, saveState } from '../config.js';
 import { WordPressClient } from '../api/wordpress.js';
-import { wpToMarkdown, mediaToMarkdown, taxonomyToMarkdown, generateFilename, hashContent } from '../sync/content.js';
+import { wpToMarkdown, mediaToMarkdown, taxonomyToMarkdown, wcProductToMarkdown, generateFilename, hashContent } from '../sync/content.js';
 
 export async function pullCommand(options) {
   const config = await loadConfig();
@@ -44,6 +44,16 @@ export async function pullCommand(options) {
         else if (result.isChanged) updatedFiles++;
         if (result.success) totalFiles++;
         spinner.succeed(`${typeConfig.label}: ${result.theme}`);
+        continue;
+      }
+
+      // Special handling for WooCommerce products (use WC API for variations)
+      if (type === 'product') {
+        const result = await pullWcProducts(client, contentDir, state, options.force, spinner);
+        newFiles += result.newFiles;
+        updatedFiles += result.updatedFiles;
+        totalFiles += result.totalFiles;
+        spinner.succeed(`${typeConfig.label}: ${result.totalFiles} items (${result.variableCount} variable)`);
         continue;
       }
 
@@ -210,4 +220,68 @@ async function pullGlobalStyles(client, contentDir, state, force) {
     isNew,
     isChanged,
   };
+}
+
+async function pullWcProducts(client, contentDir, state, force, spinner) {
+  const result = {
+    totalFiles: 0,
+    newFiles: 0,
+    updatedFiles: 0,
+    variableCount: 0,
+  };
+
+  // Check if WooCommerce is available
+  const hasWc = await client.hasWooCommerce();
+  if (!hasWc) {
+    // Fall back to standard WP REST API (without variations)
+    return result;
+  }
+
+  const typeConfig = CONTENT_TYPES.product;
+  const typeDir = join(process.cwd(), contentDir, typeConfig.folder);
+  await mkdir(typeDir, { recursive: true });
+
+  spinner.text = 'Fetching products via WooCommerce API...';
+  const products = await client.fetchWcProducts();
+
+  for (const product of products) {
+    spinner.text = `Processing ${product.name}...`;
+
+    // Fetch variations for variable products
+    let variations = [];
+    if (product.type === 'variable') {
+      result.variableCount++;
+      variations = await client.fetchProductVariations(product.id);
+    }
+
+    const filename = `${product.slug}.md`;
+    const filepath = join(typeDir, filename);
+    const relativePath = join(contentDir, typeConfig.folder, filename);
+
+    const markdown = wcProductToMarkdown(product, variations);
+    const hash = hashContent(markdown);
+
+    const existingState = state.files[relativePath];
+    const isNew = !existingState;
+    const isChanged = existingState && existingState.remoteHash !== hash;
+
+    if (isNew || isChanged || force) {
+      await writeFile(filepath, markdown);
+
+      state.files[relativePath] = {
+        id: product.id,
+        type: 'product',
+        localHash: hash,
+        remoteHash: hash,
+        lastSync: new Date().toISOString(),
+      };
+
+      if (isNew) result.newFiles++;
+      else if (isChanged) result.updatedFiles++;
+    }
+
+    result.totalFiles++;
+  }
+
+  return result;
 }

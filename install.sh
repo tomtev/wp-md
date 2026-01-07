@@ -245,11 +245,15 @@ main() {
     setup_path
 
     echo ""
-    success "wp-md installed! Restart your terminal, then:"
+    success "wp-md installed!"
+    echo ""
+    echo -e "${GREEN}Get started:${NC}"
     echo ""
     echo "  cd your-project    # where you want the markdown files"
-    echo "  wp-md init"
-    echo "  wp-md pull"
+    echo "  ~/.local/bin/wp-md init"
+    echo "  ~/.local/bin/wp-md pull"
+    echo ""
+    echo -e "${CYAN}Tip:${NC} Run 'exec \$SHELL' to use 'wp-md' without the full path."
     echo ""
 }
 

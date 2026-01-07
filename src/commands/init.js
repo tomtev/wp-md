@@ -150,10 +150,98 @@ All WordPress content is in \`${contentDir}/\`:
 
 ### WooCommerce (if installed)
 
-- \`${contentDir}/woocommerce/products/\` - Products
+- \`${contentDir}/woocommerce/products/\` - Products (including variations)
 - \`${contentDir}/woocommerce/categories/\` - Product categories
 - \`${contentDir}/woocommerce/tags/\` - Product tags
 - \`${contentDir}/woocommerce/brands/\` - Product brands
+
+## WooCommerce Product Format
+
+Products use comprehensive YAML frontmatter with variations embedded:
+
+\`\`\`markdown
+---
+id: 456
+type: product
+slug: variable-tshirt
+status: publish
+title: Variable T-Shirt
+product_type: variable
+regular_price: "29.99"
+sku: TSHIRT-001
+stock_status: instock
+categories:
+  - id: 15
+    name: Clothing
+    slug: clothing
+attributes:
+  - id: 1
+    name: Size
+    options:
+      - Small
+      - Medium
+      - Large
+    variation: true
+    visible: true
+  - id: 2
+    name: Color
+    options:
+      - Red
+      - Blue
+    variation: true
+    visible: true
+variations:
+  - id: 457
+    sku: TSHIRT-001-SM-RED
+    regular_price: "29.99"
+    stock_status: instock
+    attributes:
+      - name: Size
+        option: Small
+      - name: Color
+        option: Red
+  - id: 458
+    sku: TSHIRT-001-MD-BLUE
+    regular_price: "29.99"
+    sale_price: "24.99"
+    stock_status: instock
+    attributes:
+      - name: Size
+        option: Medium
+      - name: Color
+        option: Blue
+---
+<p>Product description using HTML or Gutenberg blocks.</p>
+\`\`\`
+
+### Product Fields
+
+| Field | Description |
+|-------|-------------|
+| \`product_type\` | simple, variable, grouped, external |
+| \`regular_price\` | Base price (string) |
+| \`sale_price\` | Sale price (string) |
+| \`sku\` | Stock keeping unit |
+| \`stock_status\` | instock, outofstock, onbackorder |
+| \`manage_stock\` | true/false for inventory tracking |
+| \`stock_quantity\` | Number in stock |
+| \`attributes\` | Product attributes (for variations) |
+| \`variations\` | Array of variation objects |
+
+### Editing Variations
+
+To add a new variation, add an entry to \`variations\` without an \`id\`:
+
+\`\`\`yaml
+variations:
+  - sku: NEW-VAR
+    regular_price: "35.00"
+    attributes:
+      - name: Size
+        option: XL
+\`\`\`
+
+Run \`wp-md push\` to create the variation on WordPress.
 
 ## File Format
 

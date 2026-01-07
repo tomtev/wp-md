@@ -6,6 +6,7 @@ export class WordPressClient {
     this.username = config.username;
     this.appPassword = config.appPassword;
     this.restPath = config.restPath || null; // Will be auto-detected
+    this.wcPath = config.wcPath || null; // WooCommerce REST API path
   }
 
   get authHeader() {
@@ -260,5 +261,169 @@ export class WordPressClient {
     }
 
     return response.json();
+  }
+
+  // WooCommerce REST API methods
+  buildWcUrl(endpoint) {
+    if (this.wcPath === 'query') {
+      const [path, queryString] = endpoint.split('?');
+      const separator = this.baseUrl.includes('?') ? '&' : '?';
+      let url = `${this.baseUrl}${separator}rest_route=/wc/v3/${path}`;
+      if (queryString) {
+        url += `&${queryString}`;
+      }
+      return url;
+    }
+    return `${this.baseUrl}/wp-json/wc/v3/${endpoint}`;
+  }
+
+  async wcRequest(endpoint, options = {}) {
+    const url = this.buildWcUrl(endpoint);
+
+    const headers = {
+      'Content-Type': 'application/json',
+      ...options.headers,
+    };
+
+    if (this.authHeader) {
+      headers['Authorization'] = this.authHeader;
+    }
+
+    const response = await fetch(url, {
+      ...options,
+      headers,
+    });
+
+    if (!response.ok) {
+      const error = await response.text();
+      throw new Error(`WooCommerce API error (${response.status}): ${error}`);
+    }
+
+    return response.json();
+  }
+
+  async detectWcPath() {
+    // Try /wp-json/wc/v3/ first
+    try {
+      const response = await fetch(`${this.baseUrl}/wp-json/wc/v3/`, {
+        headers: this.authHeader ? { 'Authorization': this.authHeader } : {},
+      });
+      if (response.ok) {
+        this.wcPath = 'pretty';
+        return 'pretty';
+      }
+    } catch {}
+
+    // Fall back to ?rest_route=/wc/v3/
+    try {
+      const separator = this.baseUrl.includes('?') ? '&' : '?';
+      const response = await fetch(`${this.baseUrl}${separator}rest_route=/wc/v3/`, {
+        headers: this.authHeader ? { 'Authorization': this.authHeader } : {},
+      });
+      if (response.ok) {
+        this.wcPath = 'query';
+        return 'query';
+      }
+    } catch {}
+
+    // WooCommerce not available
+    return null;
+  }
+
+  async hasWooCommerce() {
+    if (this.wcPath === null) {
+      await this.detectWcPath();
+    }
+    return this.wcPath !== null;
+  }
+
+  async fetchWcProduct(productId) {
+    if (!this.wcPath) await this.detectWcPath();
+    if (!this.wcPath) throw new Error('WooCommerce API not available');
+    return this.wcRequest(`products/${productId}`);
+  }
+
+  async fetchWcProducts() {
+    if (!this.wcPath) await this.detectWcPath();
+    if (!this.wcPath) return [];
+
+    const items = [];
+    let page = 1;
+    const perPage = 100;
+
+    while (true) {
+      try {
+        const batch = await this.wcRequest(`products?per_page=${perPage}&page=${page}`);
+        items.push(...batch);
+        if (batch.length < perPage) break;
+        page++;
+      } catch (error) {
+        if (error.message.includes('404') && page === 1) break;
+        throw error;
+      }
+    }
+
+    return items;
+  }
+
+  async fetchProductVariations(productId) {
+    if (!this.wcPath) await this.detectWcPath();
+    if (!this.wcPath) return [];
+
+    const variations = [];
+    let page = 1;
+    const perPage = 100;
+
+    while (true) {
+      try {
+        const batch = await this.wcRequest(
+          `products/${productId}/variations?per_page=${perPage}&page=${page}`
+        );
+        variations.push(...batch);
+        if (batch.length < perPage) break;
+        page++;
+      } catch (error) {
+        // Product may not be variable or no variations exist
+        if (error.message.includes('404') && page === 1) break;
+        throw error;
+      }
+    }
+
+    return variations;
+  }
+
+  async updateWcProduct(productId, data) {
+    if (!this.wcPath) await this.detectWcPath();
+    if (!this.wcPath) throw new Error('WooCommerce API not available');
+    return this.wcRequest(`products/${productId}`, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    });
+  }
+
+  async updateProductVariation(productId, variationId, data) {
+    if (!this.wcPath) await this.detectWcPath();
+    if (!this.wcPath) throw new Error('WooCommerce API not available');
+    return this.wcRequest(`products/${productId}/variations/${variationId}`, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    });
+  }
+
+  async createProductVariation(productId, data) {
+    if (!this.wcPath) await this.detectWcPath();
+    if (!this.wcPath) throw new Error('WooCommerce API not available');
+    return this.wcRequest(`products/${productId}/variations`, {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  }
+
+  async deleteProductVariation(productId, variationId) {
+    if (!this.wcPath) await this.detectWcPath();
+    if (!this.wcPath) throw new Error('WooCommerce API not available');
+    return this.wcRequest(`products/${productId}/variations/${variationId}?force=true`, {
+      method: 'DELETE',
+    });
   }
 }

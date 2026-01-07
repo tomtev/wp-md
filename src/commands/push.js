@@ -4,7 +4,7 @@ import chalk from 'chalk';
 import ora from 'ora';
 import { loadConfig, CONTENT_TYPES, loadState, saveState } from '../config.js';
 import { WordPressClient } from '../api/wordpress.js';
-import { markdownToWp, hashContent } from '../sync/content.js';
+import { markdownToWp, markdownToWcProduct, parseVariationData, hashContent } from '../sync/content.js';
 
 export async function pushCommand(options) {
   const config = await loadConfig();
@@ -45,26 +45,46 @@ export async function pushCommand(options) {
 
     try {
       const content = await readFile(change.filepath, 'utf-8');
-      const parsed = markdownToWp(content);
 
-      if (parsed.id) {
-        await client.update(parsed.type, parsed.id, parsed.data);
+      // Special handling for WooCommerce products
+      if (change.type === 'product') {
+        const result = await pushWcProduct(client, content, spinner);
+        if (result.success) {
+          const hash = hashContent(content);
+          state.files[change.relativePath] = {
+            id: result.id,
+            type: 'product',
+            localHash: hash,
+            remoteHash: hash,
+            lastSync: new Date().toISOString(),
+          };
+          spinner.succeed(`${change.relativePath} (${result.variationsUpdated} variations)`);
+          pushed++;
+        } else {
+          throw new Error(result.error);
+        }
       } else {
-        const created = await client.create(parsed.type, parsed.data);
-        parsed.id = created.id;
+        const parsed = markdownToWp(content);
+
+        if (parsed.id) {
+          await client.update(parsed.type, parsed.id, parsed.data);
+        } else {
+          const created = await client.create(parsed.type, parsed.data);
+          parsed.id = created.id;
+        }
+
+        const hash = hashContent(content);
+        state.files[change.relativePath] = {
+          id: parsed.id,
+          type: parsed.type,
+          localHash: hash,
+          remoteHash: hash,
+          lastSync: new Date().toISOString(),
+        };
+
+        spinner.succeed(change.relativePath);
+        pushed++;
       }
-
-      const hash = hashContent(content);
-      state.files[change.relativePath] = {
-        id: parsed.id,
-        type: parsed.type,
-        localHash: hash,
-        remoteHash: hash,
-        lastSync: new Date().toISOString(),
-      };
-
-      spinner.succeed(change.relativePath);
-      pushed++;
     } catch (error) {
       spinner.fail(`${change.relativePath}: ${error.message}`);
       failed++;
@@ -127,4 +147,57 @@ async function findChangedFiles(contentDir, state, filterType, filterFile) {
   }
 
   return changes;
+}
+
+async function pushWcProduct(client, content, spinner) {
+  const hasWc = await client.hasWooCommerce();
+  if (!hasWc) {
+    return { success: false, error: 'WooCommerce API not available' };
+  }
+
+  const parsed = markdownToWcProduct(content);
+  let variationsUpdated = 0;
+
+  spinner.text = `Updating product ${parsed.data.name}...`;
+
+  // Update the main product
+  if (parsed.id) {
+    await client.updateWcProduct(parsed.id, parsed.data);
+  } else {
+    // Create new product
+    const created = await client.wcRequest('products', {
+      method: 'POST',
+      body: JSON.stringify(parsed.data),
+    });
+    parsed.id = created.id;
+  }
+
+  // Handle variations for variable products
+  if (parsed.variations?.length > 0 && parsed.data.type === 'variable') {
+    spinner.text = `Updating ${parsed.variations.length} variations...`;
+
+    // Get existing variations to compare
+    const existingVariations = await client.fetchProductVariations(parsed.id);
+    const existingIds = new Set(existingVariations.map(v => v.id));
+
+    for (const variation of parsed.variations) {
+      const variationData = parseVariationData(variation);
+
+      if (variation.id && existingIds.has(variation.id)) {
+        // Update existing variation
+        await client.updateProductVariation(parsed.id, variation.id, variationData);
+        variationsUpdated++;
+      } else if (!variation.id) {
+        // Create new variation
+        await client.createProductVariation(parsed.id, variationData);
+        variationsUpdated++;
+      }
+    }
+  }
+
+  return {
+    success: true,
+    id: parsed.id,
+    variationsUpdated,
+  };
 }
