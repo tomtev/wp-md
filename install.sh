@@ -6,6 +6,7 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
+CYAN='\033[0;36m'
 NC='\033[0m' # No Color
 
 # Configuration
@@ -14,12 +15,13 @@ INSTALL_DIR="${WP_MD_INSTALL_DIR:-$HOME/.wp-md}"
 BIN_DIR="${WP_MD_BIN_DIR:-$HOME/.local/bin}"
 
 print_banner() {
-    echo -e "${BLUE}"
-    echo "╔══════════════════════════════════════════╗"
-    echo "║            wp-md installer               ║"
-    echo "║   WordPress content as markdown files    ║"
-    echo "╚══════════════════════════════════════════╝"
-    echo -e "${NC}"
+    echo ""
+    echo -e "${CYAN}  ╦ ╦╔═╗   ╔╦╗╔╦╗${NC}"
+    echo -e "${CYAN}  ║║║╠═╝───║║║ ║║${NC}"
+    echo -e "${CYAN}  ╚╩╝╩     ╩ ╩═╩╝${NC}"
+    echo ""
+    echo "  Create & edit remote WordPress content as markdown files locally."
+    echo ""
 }
 
 info() {
@@ -124,11 +126,9 @@ install_via_github() {
     VERSION=$(echo "$RELEASE_INFO" | grep '"tag_name"' | cut -d '"' -f 4)
 
     if [ -z "$VERSION" ]; then
-        warn "Could not fetch latest release, using main branch"
         VERSION="main"
         TARBALL_URL="https://github.com/$REPO/archive/refs/heads/main.tar.gz"
     else
-        info "Latest version: $VERSION"
         TARBALL_URL="https://github.com/$REPO/archive/refs/tags/$VERSION.tar.gz"
     fi
 
@@ -153,12 +153,8 @@ install_via_github() {
     # Install dependencies
     cd "$INSTALL_DIR"
 
-    if check_node && check_npm; then
-        info "Installing dependencies..."
-        npm install --production
-    else
-        error "Node.js 18+ and npm are required. Please install Node.js first."
-    fi
+    info "Installing dependencies..."
+    npm install --omit=dev --silent
 
     # Create symlink
     ln -sf "$INSTALL_DIR/bin/cli.js" "$BIN_DIR/wp-md"
