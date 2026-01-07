@@ -235,54 +235,27 @@ main() {
     print_banner
     detect_os
 
-    # Try npm first if available
-    if check_node && check_npm; then
+    if ! check_node || ! check_npm; then
         echo ""
-        info "Node.js detected. Choose installation method:"
-        echo "  1) npm install -g (recommended)"
-        echo "  2) Local installation to ~/.wp-md"
-        echo ""
-        read -p "Choice [1]: " choice
-        choice=${choice:-1}
-
-        case $choice in
-            1)
-                if install_via_npm; then
-                    verify_installation
-                    exit 0
-                fi
-                warn "npm install failed, falling back to local install"
-                install_via_github
-                ;;
-            2)
-                install_via_github
-                ;;
-            *)
-                error "Invalid choice"
-                ;;
-        esac
-    else
-        warn "Node.js 18+ not found"
-        echo ""
-        echo "Options:"
-        echo "  1) Install Node.js first, then re-run this script"
-        echo "     - macOS: brew install node"
-        echo "     - Ubuntu: curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash - && sudo apt-get install -y nodejs"
-        echo "     - Or visit: https://nodejs.org/"
-        echo ""
-        echo "  2) Continue anyway (will download but won't work without Node.js)"
-        echo ""
-        read -p "Continue with download? [y/N]: " continue_download
-
-        if [[ "$continue_download" =~ ^[Yy]$ ]]; then
-            install_via_github
-        else
-            error "Please install Node.js 18+ and try again"
-        fi
+        error "Node.js 18+ is required. Install it first:
+  - macOS: brew install node
+  - Ubuntu: curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash - && sudo apt-get install -y nodejs
+  - Or visit: https://nodejs.org/"
     fi
 
+    echo ""
+    install_via_github
     setup_path
-    verify_installation
+
+    echo ""
+    success "wp-md installed!"
+    echo ""
+    echo -e "${GREEN}Next steps:${NC}"
+    echo ""
+    echo "  cd your-project"
+    echo "  wp-md init"
+    echo "  wp-md pull"
+    echo ""
 }
 
 main "$@"
