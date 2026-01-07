@@ -250,7 +250,7 @@ main() {
     echo -e "${GREEN}Get started:${NC}"
     echo ""
     echo "  exec \$SHELL"
-    echo "  cd your-project"
+    echo "  cd your-project    # where you want the markdown files"
     echo "  wp-md init"
     echo "  wp-md pull"
     echo ""
