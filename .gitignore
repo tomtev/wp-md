@@ -1,7 +1,7 @@
 node_modules/
 content/
 .env
-.wpsyncrc.json
-.wpsync-state.json
+.wpmdrc.json
+.wpmd-state.json
 .DS_Store
 *.log

@@ -1,0 +1,1055 @@
+{
+  "files": {
+    "content/post-types/post/hello-world.md": {
+      "id": 1,
+      "type": "post",
+      "localHash": "78b7cf47",
+      "remoteHash": "78b7cf47",
+      "lastSync": "2026-01-07T10:40:50.400Z"
+    },
+    "content/post-types/page/shop.md": {
+      "id": 25,
+      "type": "page",
+      "localHash": "-22c63fd",
+      "remoteHash": "-22c63fd",
+      "lastSync": "2026-01-07T10:40:50.879Z"
+    },
+    "content/post-types/page/cart.md": {
+      "id": 26,
+      "type": "page",
+      "localHash": "-40285b54",
+      "remoteHash": "-40285b54",
+      "lastSync": "2026-01-07T10:40:50.880Z"
+    },
+    "content/post-types/page/checkout.md": {
+      "id": 27,
+      "type": "page",
+      "localHash": "-1bd052de",
+      "remoteHash": "-1bd052de",
+      "lastSync": "2026-01-07T10:40:50.880Z"
+    },
+    "content/post-types/page/my-account.md": {
+      "id": 28,
+      "type": "page",
+      "localHash": "-30af21b2",
+      "remoteHash": "-30af21b2",
+      "lastSync": "2026-01-07T10:40:50.881Z"
+    },
+    "content/post-types/page/refund_returns.md": {
+      "id": 29,
+      "type": "page",
+      "localHash": "-3deda9a0",
+      "remoteHash": "-3deda9a0",
+      "lastSync": "2026-01-07T10:40:50.881Z"
+    },
+    "content/post-types/page/home.md": {
+      "id": 2,
+      "type": "page",
+      "localHash": "-4100dcab",
+      "remoteHash": "-4100dcab",
+      "lastSync": "2026-01-07T11:05:54.158Z"
+    },
+    "content/post-types/wp_navigation/navigation.md": {
+      "id": 3,
+      "type": "wp_navigation",
+      "localHash": "6dd8970f",
+      "remoteHash": "6dd8970f",
+      "lastSync": "2026-01-07T10:40:51.200Z"
+    },
+    "content/templates/page.md": {
+      "id": "flatsome//page",
+      "type": "wp_template",
+      "localHash": "1365eb75",
+      "remoteHash": "1365eb75",
+      "lastSync": "2026-01-07T10:40:51.494Z"
+    },
+    "content/templates/page-cart.md": {
+      "id": "flatsome//page-cart",
+      "type": "wp_template",
+      "localHash": "-203d789",
+      "remoteHash": "-203d789",
+      "lastSync": "2026-01-07T10:40:51.495Z"
+    },
+    "content/templates/page-checkout.md": {
+      "id": "flatsome//page-checkout",
+      "type": "wp_template",
+      "localHash": "407554e8",
+      "remoteHash": "407554e8",
+      "lastSync": "2026-01-07T10:40:51.495Z"
+    },
+    "content/templates/index.md": {
+      "id": "flatsome//index",
+      "type": "wp_template",
+      "localHash": "-5d0d6618",
+      "remoteHash": "-5d0d6618",
+      "lastSync": "2026-01-07T10:40:51.496Z"
+    },
+    "content/templates/archive-product.md": {
+      "id": "flatsome//archive-product",
+      "type": "wp_template",
+      "localHash": "-7f2f6de",
+      "remoteHash": "-7f2f6de",
+      "lastSync": "2026-01-07T10:40:51.496Z"
+    },
+    "content/templates/page-transparent-header.md": {
+      "id": "flatsome//page-transparent-header",
+      "type": "wp_template",
+      "localHash": "-9152ee9",
+      "remoteHash": "-9152ee9",
+      "lastSync": "2026-01-07T10:40:51.496Z"
+    },
+    "content/templates/single-product.md": {
+      "id": "flatsome//single-product",
+      "type": "wp_template",
+      "localHash": "75ab229d",
+      "remoteHash": "75ab229d",
+      "lastSync": "2026-01-07T10:40:51.497Z"
+    },
+    "content/templates/taxonomy-product_attribute.md": {
+      "id": "flatsome//taxonomy-product_attribute",
+      "type": "wp_template",
+      "localHash": "29b02762",
+      "remoteHash": "29b02762",
+      "lastSync": "2026-01-07T10:40:51.497Z"
+    },
+    "content/templates/product-search-results.md": {
+      "id": "flatsome//product-search-results",
+      "type": "wp_template",
+      "localHash": "4244e28c",
+      "remoteHash": "4244e28c",
+      "lastSync": "2026-01-07T10:40:51.497Z"
+    },
+    "content/templates/order-confirmation.md": {
+      "id": "flatsome//order-confirmation",
+      "type": "wp_template",
+      "localHash": "-2a54f106",
+      "remoteHash": "-2a54f106",
+      "lastSync": "2026-01-07T10:40:51.498Z"
+    },
+    "content/templates/coming-soon.md": {
+      "id": "flatsome//coming-soon",
+      "type": "wp_template",
+      "localHash": "-769346b",
+      "remoteHash": "-769346b",
+      "lastSync": "2026-01-07T10:40:51.498Z"
+    },
+    "content/template-parts/footer.md": {
+      "id": "flatsome//footer",
+      "type": "wp_template_part",
+      "localHash": "44dddae2",
+      "remoteHash": "44dddae2",
+      "lastSync": "2026-01-07T10:40:51.783Z"
+    },
+    "content/template-parts/header.md": {
+      "id": "flatsome//header",
+      "type": "wp_template_part",
+      "localHash": "60a0d72b",
+      "remoteHash": "60a0d72b",
+      "lastSync": "2026-01-07T10:40:51.783Z"
+    },
+    "content/template-parts/simple-product-add-to-cart-with-options.md": {
+      "id": "flatsome//simple-product-add-to-cart-with-options",
+      "type": "wp_template_part",
+      "localHash": "-688705eb",
+      "remoteHash": "-688705eb",
+      "lastSync": "2026-01-07T10:40:51.783Z"
+    },
+    "content/template-parts/grouped-product-add-to-cart-with-options.md": {
+      "id": "flatsome//grouped-product-add-to-cart-with-options",
+      "type": "wp_template_part",
+      "localHash": "5d0c1b75",
+      "remoteHash": "5d0c1b75",
+      "lastSync": "2026-01-07T10:40:51.784Z"
+    },
+    "content/template-parts/mini-cart.md": {
+      "id": "flatsome//mini-cart",
+      "type": "wp_template_part",
+      "localHash": "40d05239",
+      "remoteHash": "40d05239",
+      "lastSync": "2026-01-07T10:40:51.784Z"
+    },
+    "content/template-parts/product-quick-view.md": {
+      "id": "flatsome-blocks//product-quick-view",
+      "type": "wp_template_part",
+      "localHash": "6f9b1934",
+      "remoteHash": "6f9b1934",
+      "lastSync": "2026-01-07T10:40:51.784Z"
+    },
+    "content/template-parts/checkout-header.md": {
+      "id": "woocommerce/woocommerce//checkout-header",
+      "type": "wp_template_part",
+      "localHash": "5844c291",
+      "remoteHash": "5844c291",
+      "lastSync": "2026-01-07T10:40:51.785Z"
+    },
+    "content/template-parts/coming-soon-social-links.md": {
+      "id": "woocommerce/woocommerce//coming-soon-social-links",
+      "type": "wp_template_part",
+      "localHash": "-474ded41",
+      "remoteHash": "-474ded41",
+      "lastSync": "2026-01-07T10:40:51.785Z"
+    },
+    "content/template-parts/external-product-add-to-cart-with-options.md": {
+      "id": "woocommerce/woocommerce//external-product-add-to-cart-with-options",
+      "type": "wp_template_part",
+      "localHash": "2d81e6b6",
+      "remoteHash": "2d81e6b6",
+      "lastSync": "2026-01-07T10:40:51.786Z"
+    },
+    "content/template-parts/variable-product-add-to-cart-with-options.md": {
+      "id": "woocommerce/woocommerce//variable-product-add-to-cart-with-options",
+      "type": "wp_template_part",
+      "localHash": "-54f8a3b7",
+      "remoteHash": "-54f8a3b7",
+      "lastSync": "2026-01-07T10:40:51.786Z"
+    },
+    "content/patterns/checkout-breadcrumbs.md": {
+      "id": 541,
+      "type": "wp_block",
+      "localHash": "2c87e60e",
+      "remoteHash": "2c87e60e",
+      "lastSync": "2026-01-07T10:40:52.036Z"
+    },
+    "content/media/flatsomelogodark-3.md": {
+      "id": 499,
+      "type": "attachment",
+      "localHash": "6be2ddf3",
+      "remoteHash": "6be2ddf3",
+      "lastSync": "2026-01-07T10:40:52.594Z"
+    },
+    "content/media/main-tiktok-banner-7.md": {
+      "id": 443,
+      "type": "attachment",
+      "localHash": "14dc47d9",
+      "remoteHash": "14dc47d9",
+      "lastSync": "2026-01-07T10:40:52.594Z"
+    },
+    "content/media/main-tiktok-banner-6.md": {
+      "id": 442,
+      "type": "attachment",
+      "localHash": "-2bc943e2",
+      "remoteHash": "-2bc943e2",
+      "lastSync": "2026-01-07T10:40:52.595Z"
+    },
+    "content/media/main-tiktok-banner-5.md": {
+      "id": 441,
+      "type": "attachment",
+      "localHash": "-6c6ecf9d",
+      "remoteHash": "-6c6ecf9d",
+      "lastSync": "2026-01-07T10:40:52.596Z"
+    },
+    "content/media/main-tiktok-banner-4.md": {
+      "id": 440,
+      "type": "attachment",
+      "localHash": "52eba4a8",
+      "remoteHash": "52eba4a8",
+      "lastSync": "2026-01-07T10:40:52.597Z"
+    },
+    "content/media/main-tiktok-banner-3.md": {
+      "id": 439,
+      "type": "attachment",
+      "localHash": "11de6722",
+      "remoteHash": "11de6722",
+      "lastSync": "2026-01-07T10:40:52.598Z"
+    },
+    "content/media/main-tiktok-banner-2.md": {
+      "id": 438,
+      "type": "attachment",
+      "localHash": "-2ec72499",
+      "remoteHash": "-2ec72499",
+      "lastSync": "2026-01-07T10:40:52.598Z"
+    },
+    "content/media/main-tiktok-banner-1.md": {
+      "id": 437,
+      "type": "attachment",
+      "localHash": "2d0377d6",
+      "remoteHash": "2d0377d6",
+      "lastSync": "2026-01-07T10:40:52.599Z"
+    },
+    "content/media/700_1757053859.md": {
+      "id": 425,
+      "type": "attachment",
+      "localHash": "-73376",
+      "remoteHash": "-73376",
+      "lastSync": "2026-01-07T10:40:52.600Z"
+    },
+    "content/media/714_1757051905.md": {
+      "id": 403,
+      "type": "attachment",
+      "localHash": "-a97756a",
+      "remoteHash": "-a97756a",
+      "lastSync": "2026-01-07T10:40:52.601Z"
+    },
+    "content/media/957_1759316545.md": {
+      "id": 398,
+      "type": "attachment",
+      "localHash": "2d1158f6",
+      "remoteHash": "2d1158f6",
+      "lastSync": "2026-01-07T10:40:52.602Z"
+    },
+    "content/media/flatsomelogo2-2.md": {
+      "id": 397,
+      "type": "attachment",
+      "localHash": "-28bf50ba",
+      "remoteHash": "-28bf50ba",
+      "lastSync": "2026-01-07T10:40:52.602Z"
+    },
+    "content/media/flatsomelogo2-3.md": {
+      "id": 396,
+      "type": "attachment",
+      "localHash": "-6c2ed717",
+      "remoteHash": "-6c2ed717",
+      "lastSync": "2026-01-07T10:40:52.603Z"
+    },
+    "content/media/custom-image-jpg.md": {
+      "id": 394,
+      "type": "attachment",
+      "localHash": "-40368610",
+      "remoteHash": "-40368610",
+      "lastSync": "2026-01-07T10:40:52.603Z"
+    },
+    "content/media/cd_4_flat-jpg.md": {
+      "id": 357,
+      "type": "attachment",
+      "localHash": "-4c6ee926",
+      "remoteHash": "-4c6ee926",
+      "lastSync": "2026-01-07T10:40:52.604Z"
+    },
+    "content/media/cd_4_angle-jpg.md": {
+      "id": 356,
+      "type": "attachment",
+      "localHash": "-54a3dae9",
+      "remoteHash": "-54a3dae9",
+      "lastSync": "2026-01-07T10:40:52.605Z"
+    },
+    "content/media/cd_2_angle-jpg.md": {
+      "id": 355,
+      "type": "attachment",
+      "localHash": "4b6e8c90",
+      "remoteHash": "4b6e8c90",
+      "lastSync": "2026-01-07T10:40:52.605Z"
+    },
+    "content/media/poster_4_flat-jpg.md": {
+      "id": 354,
+      "type": "attachment",
+      "localHash": "17b68bef",
+      "remoteHash": "17b68bef",
+      "lastSync": "2026-01-07T10:40:52.606Z"
+    },
+    "content/media/poster_4_up-jpg.md": {
+      "id": 353,
+      "type": "attachment",
+      "localHash": "2d1e61d2",
+      "remoteHash": "2d1e61d2",
+      "lastSync": "2026-01-07T10:40:52.606Z"
+    },
+    "content/media/poster_3_up-jpg.md": {
+      "id": 352,
+      "type": "attachment",
+      "localHash": "-30849f8f",
+      "remoteHash": "-30849f8f",
+      "lastSync": "2026-01-07T10:40:52.607Z"
+    },
+    "content/media/poster_2_flat-jpg.md": {
+      "id": 351,
+      "type": "attachment",
+      "localHash": "711ce7ee",
+      "remoteHash": "711ce7ee",
+      "lastSync": "2026-01-07T10:40:52.607Z"
+    },
+    "content/media/poster_2_up-jpg.md": {
+      "id": 350,
+      "type": "attachment",
+      "localHash": "-606aa6f1",
+      "remoteHash": "-606aa6f1",
+      "lastSync": "2026-01-07T10:40:52.608Z"
+    },
+    "content/media/poster_1_up-jpg.md": {
+      "id": 349,
+      "type": "attachment",
+      "localHash": "272d999",
+      "remoteHash": "272d999",
+      "lastSync": "2026-01-07T10:40:52.608Z"
+    },
+    "content/media/hoodie_2_back-jpg.md": {
+      "id": 348,
+      "type": "attachment",
+      "localHash": "31087a58",
+      "remoteHash": "31087a58",
+      "lastSync": "2026-01-07T10:40:52.609Z"
+    },
+    "content/media/hoodie_2_front-jpg.md": {
+      "id": 347,
+      "type": "attachment",
+      "localHash": "67a0c379",
+      "remoteHash": "67a0c379",
+      "lastSync": "2026-01-07T10:40:52.609Z"
+    },
+    "content/media/hoodie_1_front-jpg.md": {
+      "id": 313,
+      "type": "attachment",
+      "localHash": "-5c83ffc4",
+      "remoteHash": "-5c83ffc4",
+      "lastSync": "2026-01-07T10:40:52.610Z"
+    },
+    "content/media/863232-6132_3-jpeg.md": {
+      "id": 295,
+      "type": "attachment",
+      "localHash": "c1f566",
+      "remoteHash": "c1f566",
+      "lastSync": "2026-01-07T10:40:52.610Z"
+    },
+    "content/media/863232-6132_2-jpeg.md": {
+      "id": 294,
+      "type": "attachment",
+      "localHash": "-53d357ff",
+      "remoteHash": "-53d357ff",
+      "lastSync": "2026-01-07T10:40:52.611Z"
+    },
+    "content/media/863232-6132_1-jpeg.md": {
+      "id": 293,
+      "type": "attachment",
+      "localHash": "57975a9c",
+      "remoteHash": "57975a9c",
+      "lastSync": "2026-01-07T10:40:52.611Z"
+    },
+    "content/media/poster_5_flat-jpg.md": {
+      "id": 141,
+      "type": "attachment",
+      "localHash": "36543d1",
+      "remoteHash": "36543d1",
+      "lastSync": "2026-01-07T10:40:52.612Z"
+    },
+    "content/media/poster_5_up-jpg.md": {
+      "id": 140,
+      "type": "attachment",
+      "localHash": "14bb6934",
+      "remoteHash": "14bb6934",
+      "lastSync": "2026-01-07T10:40:52.613Z"
+    },
+    "content/media/hoodie_6_back-jpg.md": {
+      "id": 139,
+      "type": "attachment",
+      "localHash": "-584165e4",
+      "remoteHash": "-584165e4",
+      "lastSync": "2026-01-07T10:40:52.613Z"
+    },
+    "content/media/hoodie_6_front-jpg.md": {
+      "id": 138,
+      "type": "attachment",
+      "localHash": "2d2c338f",
+      "remoteHash": "2d2c338f",
+      "lastSync": "2026-01-07T10:40:52.614Z"
+    },
+    "content/media/hoodie_5_back-jpg.md": {
+      "id": 137,
+      "type": "attachment",
+      "localHash": "626ba53a",
+      "remoteHash": "626ba53a",
+      "lastSync": "2026-01-07T10:40:52.614Z"
+    },
+    "content/media/hoodie_5_front-jpg.md": {
+      "id": 136,
+      "type": "attachment",
+      "localHash": "13cea169",
+      "remoteHash": "13cea169",
+      "lastSync": "2026-01-07T10:40:52.615Z"
+    },
+    "content/media/hoodie_4_back-jpg.md": {
+      "id": 135,
+      "type": "attachment",
+      "localHash": "1d18b058",
+      "remoteHash": "1d18b058",
+      "lastSync": "2026-01-07T10:40:52.615Z"
+    },
+    "content/media/hoodie_4_front-jpg.md": {
+      "id": 134,
+      "type": "attachment",
+      "localHash": "2848e701",
+      "remoteHash": "2848e701",
+      "lastSync": "2026-01-07T10:40:52.615Z"
+    },
+    "content/media/hoodie_3_back-jpg.md": {
+      "id": 133,
+      "type": "attachment",
+      "localHash": "-283a448a",
+      "remoteHash": "-283a448a",
+      "lastSync": "2026-01-07T10:40:52.616Z"
+    },
+    "content/media/hoodie_3_front-jpg.md": {
+      "id": 132,
+      "type": "attachment",
+      "localHash": "eeb54db",
+      "remoteHash": "eeb54db",
+      "lastSync": "2026-01-07T10:40:52.616Z"
+    },
+    "content/media/hoodie_1_back-jpg.md": {
+      "id": 131,
+      "type": "attachment",
+      "localHash": "-6deeb78a",
+      "remoteHash": "-6deeb78a",
+      "lastSync": "2026-01-07T10:40:52.617Z"
+    },
+    "content/media/hoodie_7_back-jpg.md": {
+      "id": 130,
+      "type": "attachment",
+      "localHash": "-4fb20899",
+      "remoteHash": "-4fb20899",
+      "lastSync": "2026-01-07T10:40:52.618Z"
+    },
+    "content/media/hoodie_7_front-jpg.md": {
+      "id": 129,
+      "type": "attachment",
+      "localHash": "5a240409",
+      "remoteHash": "5a240409",
+      "lastSync": "2026-01-07T10:40:52.618Z"
+    },
+    "content/media/t_7_back-jpg.md": {
+      "id": 128,
+      "type": "attachment",
+      "localHash": "-2221fd84",
+      "remoteHash": "-2221fd84",
+      "lastSync": "2026-01-07T10:40:52.618Z"
+    },
+    "content/media/t_7_front-jpg.md": {
+      "id": 127,
+      "type": "attachment",
+      "localHash": "2a280843",
+      "remoteHash": "2a280843",
+      "lastSync": "2026-01-07T10:40:52.619Z"
+    },
+    "content/media/t_6_back-jpg.md": {
+      "id": 126,
+      "type": "attachment",
+      "localHash": "-3b603a6",
+      "remoteHash": "-3b603a6",
+      "lastSync": "2026-01-07T10:40:52.619Z"
+    },
+    "content/media/t_6_front-jpg.md": {
+      "id": 125,
+      "type": "attachment",
+      "localHash": "-672e3a23",
+      "remoteHash": "-672e3a23",
+      "lastSync": "2026-01-07T10:40:52.620Z"
+    },
+    "content/media/t_5_back-jpg.md": {
+      "id": 124,
+      "type": "attachment",
+      "localHash": "1ab5f638",
+      "remoteHash": "1ab5f638",
+      "lastSync": "2026-01-07T10:40:52.620Z"
+    },
+    "content/media/t_5_front-jpg.md": {
+      "id": 123,
+      "type": "attachment",
+      "localHash": "-553c834b",
+      "remoteHash": "-553c834b",
+      "lastSync": "2026-01-07T10:40:52.620Z"
+    },
+    "content/media/t_4_front1-jpg.md": {
+      "id": 122,
+      "type": "attachment",
+      "localHash": "-118cf88",
+      "remoteHash": "-118cf88",
+      "lastSync": "2026-01-07T10:40:52.621Z"
+    },
+    "content/media/t_4_back-jpg.md": {
+      "id": 121,
+      "type": "attachment",
+      "localHash": "-575248ad",
+      "remoteHash": "-575248ad",
+      "lastSync": "2026-01-07T10:40:52.621Z"
+    },
+    "content/media/t_3_front-jpg.md": {
+      "id": 120,
+      "type": "attachment",
+      "localHash": "-4d572654",
+      "remoteHash": "-4d572654",
+      "lastSync": "2026-01-07T10:40:52.621Z"
+    },
+    "content/media/t_3_back-jpg.md": {
+      "id": 119,
+      "type": "attachment",
+      "localHash": "28ba1d9c",
+      "remoteHash": "28ba1d9c",
+      "lastSync": "2026-01-07T10:40:52.622Z"
+    },
+    "content/media/t_4_front-jpg.md": {
+      "id": 118,
+      "type": "attachment",
+      "localHash": "1390a4b3",
+      "remoteHash": "1390a4b3",
+      "lastSync": "2026-01-07T10:40:52.622Z"
+    },
+    "content/media/t_2_back-jpg.md": {
+      "id": 117,
+      "type": "attachment",
+      "localHash": "4726177a",
+      "remoteHash": "4726177a",
+      "lastSync": "2026-01-07T10:40:52.622Z"
+    },
+    "content/media/t_2_front-jpg.md": {
+      "id": 116,
+      "type": "attachment",
+      "localHash": "-16b02355",
+      "remoteHash": "-16b02355",
+      "lastSync": "2026-01-07T10:40:52.623Z"
+    },
+    "content/media/t_1_back-jpg.md": {
+      "id": 115,
+      "type": "attachment",
+      "localHash": "-235781ea",
+      "remoteHash": "-235781ea",
+      "lastSync": "2026-01-07T10:40:52.623Z"
+    },
+    "content/media/t_1_front-jpg.md": {
+      "id": 114,
+      "type": "attachment",
+      "localHash": "57f99a45",
+      "remoteHash": "57f99a45",
+      "lastSync": "2026-01-07T10:40:52.623Z"
+    },
+    "content/media/woocommerce-placeholder.md": {
+      "id": 24,
+      "type": "attachment",
+      "localHash": "-3edfe7f2",
+      "remoteHash": "-3edfe7f2",
+      "lastSync": "2026-01-07T10:40:52.624Z"
+    },
+    "content/theme/theme.json": {
+      "type": "wp_global_styles",
+      "theme": "flatsome",
+      "localHash": "6ad71f1f",
+      "remoteHash": "6ad71f1f",
+      "lastSync": "2026-01-07T11:05:56.581Z"
+    },
+    "content/post-types/page/test-page-from-cli.md": {
+      "id": 566,
+      "type": "page",
+      "localHash": "-7bde32b0",
+      "remoteHash": "-7bde32b0",
+      "lastSync": "2026-01-07T10:43:55.625Z"
+    },
+    "content/patterns/hero-section.md": {
+      "id": 567,
+      "type": "wp_block",
+      "localHash": "59d96e25",
+      "remoteHash": "59d96e25",
+      "lastSync": "2026-01-07T11:09:33.104Z"
+    },
+    "content/media/opera-logo.md": {
+      "id": 570,
+      "type": "attachment",
+      "localHash": "4d44416a",
+      "remoteHash": "4d44416a",
+      "lastSync": "2026-01-07T10:52:44.104Z"
+    },
+    "content/woocommerce/products/woo-ninja-2.md": {
+      "id": 332,
+      "type": "product",
+      "localHash": "-1829b2a6",
+      "remoteHash": "-1829b2a6",
+      "lastSync": "2026-01-07T11:05:55.496Z"
+    },
+    "content/woocommerce/products/woo-logo.md": {
+      "id": 81,
+      "type": "product",
+      "localHash": "66ff686f",
+      "remoteHash": "66ff686f",
+      "lastSync": "2026-01-07T11:05:55.496Z"
+    },
+    "content/woocommerce/products/woo-logo-2.md": {
+      "id": 82,
+      "type": "product",
+      "localHash": "-4f8a789c",
+      "remoteHash": "-4f8a789c",
+      "lastSync": "2026-01-07T11:05:55.496Z"
+    },
+    "content/woocommerce/products/premium-quality.md": {
+      "id": 83,
+      "type": "product",
+      "localHash": "56414fb7",
+      "remoteHash": "56414fb7",
+      "lastSync": "2026-01-07T11:05:55.497Z"
+    },
+    "content/woocommerce/products/ship-your-idea.md": {
+      "id": 84,
+      "type": "product",
+      "localHash": "-1b5da6e4",
+      "remoteHash": "-1b5da6e4",
+      "lastSync": "2026-01-07T11:05:55.497Z"
+    },
+    "content/woocommerce/products/ship-your-idea-2.md": {
+      "id": 85,
+      "type": "product",
+      "localHash": "6e0dcaae",
+      "remoteHash": "6e0dcaae",
+      "lastSync": "2026-01-07T11:05:55.497Z"
+    },
+    "content/woocommerce/products/ninja-silhouette.md": {
+      "id": 86,
+      "type": "product",
+      "localHash": "-2edc2d8e",
+      "remoteHash": "-2edc2d8e",
+      "lastSync": "2026-01-07T11:05:55.497Z"
+    },
+    "content/woocommerce/products/ninja-silhouette-2.md": {
+      "id": 87,
+      "type": "product",
+      "localHash": "440c3aa4",
+      "remoteHash": "440c3aa4",
+      "lastSync": "2026-01-07T11:05:55.498Z"
+    },
+    "content/woocommerce/products/woo-ninja.md": {
+      "id": 88,
+      "type": "product",
+      "localHash": "62aa3456",
+      "remoteHash": "62aa3456",
+      "lastSync": "2026-01-07T11:05:55.498Z"
+    },
+    "content/woocommerce/products/happy-ninja.md": {
+      "id": 89,
+      "type": "product",
+      "localHash": "5b2ac017",
+      "remoteHash": "5b2ac017",
+      "lastSync": "2026-01-07T11:05:55.498Z"
+    },
+    "content/woocommerce/products/happy-ninja-2.md": {
+      "id": 90,
+      "type": "product",
+      "localHash": "d74dc9c",
+      "remoteHash": "d74dc9c",
+      "lastSync": "2026-01-07T11:05:55.498Z"
+    },
+    "content/woocommerce/products/patient-ninja.md": {
+      "id": 91,
+      "type": "product",
+      "localHash": "-33bb1af1",
+      "remoteHash": "-33bb1af1",
+      "lastSync": "2026-01-07T11:05:55.499Z"
+    },
+    "content/woocommerce/products/woo-ninja-3.md": {
+      "id": 104,
+      "type": "product",
+      "localHash": "76a73429",
+      "remoteHash": "76a73429",
+      "lastSync": "2026-01-07T11:05:55.499Z"
+    },
+    "content/taxonomies/category/uncategorized.md": {
+      "id": 1,
+      "type": "category",
+      "localHash": "7d3b9b52",
+      "remoteHash": "7d3b9b52",
+      "lastSync": "2026-01-07T11:05:56.803Z"
+    },
+    "content/woocommerce/categories/albums.md": {
+      "id": 27,
+      "type": "product_cat",
+      "localHash": "-3b9d6ad7",
+      "remoteHash": "-3b9d6ad7",
+      "lastSync": "2026-01-07T11:05:57.342Z"
+    },
+    "content/woocommerce/categories/bags.md": {
+      "id": 48,
+      "type": "product_cat",
+      "localHash": "-336e40b2",
+      "remoteHash": "-336e40b2",
+      "lastSync": "2026-01-07T11:05:57.342Z"
+    },
+    "content/woocommerce/categories/booking.md": {
+      "id": 64,
+      "type": "product_cat",
+      "localHash": "-3d3b3e7c",
+      "remoteHash": "-3d3b3e7c",
+      "lastSync": "2026-01-07T11:05:57.342Z"
+    },
+    "content/woocommerce/categories/clothing.md": {
+      "id": 19,
+      "type": "product_cat",
+      "localHash": "-288f2e55",
+      "remoteHash": "-288f2e55",
+      "lastSync": "2026-01-07T11:05:57.342Z"
+    },
+    "content/woocommerce/categories/hoodies.md": {
+      "id": 22,
+      "type": "product_cat",
+      "localHash": "4dbd350c",
+      "remoteHash": "4dbd350c",
+      "lastSync": "2026-01-07T11:05:57.342Z"
+    },
+    "content/woocommerce/categories/jeans.md": {
+      "id": 33,
+      "type": "product_cat",
+      "localHash": "-2b7681d8",
+      "remoteHash": "-2b7681d8",
+      "lastSync": "2026-01-07T11:05:57.343Z"
+    },
+    "content/woocommerce/categories/men.md": {
+      "id": 55,
+      "type": "product_cat",
+      "localHash": "-28bf7560",
+      "remoteHash": "-28bf7560",
+      "lastSync": "2026-01-07T11:05:57.343Z"
+    },
+    "content/woocommerce/categories/music.md": {
+      "id": 26,
+      "type": "product_cat",
+      "localHash": "-6ef92cde",
+      "remoteHash": "-6ef92cde",
+      "lastSync": "2026-01-07T11:05:57.343Z"
+    },
+    "content/woocommerce/categories/posters.md": {
+      "id": 25,
+      "type": "product_cat",
+      "localHash": "433f3402",
+      "remoteHash": "433f3402",
+      "lastSync": "2026-01-07T11:05:57.343Z"
+    },
+    "content/woocommerce/categories/shoes.md": {
+      "id": 40,
+      "type": "product_cat",
+      "localHash": "-63146ba0",
+      "remoteHash": "-63146ba0",
+      "lastSync": "2026-01-07T11:05:57.343Z"
+    },
+    "content/woocommerce/categories/singles.md": {
+      "id": 28,
+      "type": "product_cat",
+      "localHash": "527c37c8",
+      "remoteHash": "527c37c8",
+      "lastSync": "2026-01-07T11:05:57.343Z"
+    },
+    "content/woocommerce/categories/sweaters.md": {
+      "id": 29,
+      "type": "product_cat",
+      "localHash": "-4194109f",
+      "remoteHash": "-4194109f",
+      "lastSync": "2026-01-07T11:05:57.344Z"
+    },
+    "content/woocommerce/categories/t-shirts.md": {
+      "id": 56,
+      "type": "product_cat",
+      "localHash": "-e356277",
+      "remoteHash": "-e356277",
+      "lastSync": "2026-01-07T11:05:57.344Z"
+    },
+    "content/woocommerce/categories/tops.md": {
+      "id": 21,
+      "type": "product_cat",
+      "localHash": "-4ecce3f8",
+      "remoteHash": "-4ecce3f8",
+      "lastSync": "2026-01-07T11:05:57.344Z"
+    },
+    "content/woocommerce/categories/uncategorized.md": {
+      "id": 18,
+      "type": "product_cat",
+      "localHash": "7ac170df",
+      "remoteHash": "7ac170df",
+      "lastSync": "2026-01-07T11:05:57.344Z"
+    },
+    "content/woocommerce/categories/women.md": {
+      "id": 20,
+      "type": "product_cat",
+      "localHash": "-3054f9f4",
+      "remoteHash": "-3054f9f4",
+      "lastSync": "2026-01-07T11:05:57.344Z"
+    },
+    "content/woocommerce/tags/bag.md": {
+      "id": 49,
+      "type": "product_tag",
+      "localHash": "131898d",
+      "remoteHash": "131898d",
+      "lastSync": "2026-01-07T11:05:57.609Z"
+    },
+    "content/woocommerce/tags/classic.md": {
+      "id": 53,
+      "type": "product_tag",
+      "localHash": "-f0d1206",
+      "remoteHash": "-f0d1206",
+      "lastSync": "2026-01-07T11:05:57.609Z"
+    },
+    "content/woocommerce/tags/converse.md": {
+      "id": 47,
+      "type": "product_tag",
+      "localHash": "2b3d9b11",
+      "remoteHash": "2b3d9b11",
+      "lastSync": "2026-01-07T11:05:57.610Z"
+    },
+    "content/woocommerce/tags/diesel.md": {
+      "id": 46,
+      "type": "product_tag",
+      "localHash": "36c681f0",
+      "remoteHash": "36c681f0",
+      "lastSync": "2026-01-07T11:05:57.610Z"
+    },
+    "content/woocommerce/tags/fit.md": {
+      "id": 34,
+      "type": "product_tag",
+      "localHash": "583673b",
+      "remoteHash": "583673b",
+      "lastSync": "2026-01-07T11:05:57.610Z"
+    },
+    "content/woocommerce/tags/green.md": {
+      "id": 41,
+      "type": "product_tag",
+      "localHash": "-2e9e4845",
+      "remoteHash": "-2e9e4845",
+      "lastSync": "2026-01-07T11:05:57.610Z"
+    },
+    "content/woocommerce/tags/jack-and-jones.md": {
+      "id": 61,
+      "type": "product_tag",
+      "localHash": "54673b83",
+      "remoteHash": "54673b83",
+      "lastSync": "2026-01-07T11:05:57.610Z"
+    },
+    "content/woocommerce/tags/jack-and-jones-2.md": {
+      "id": 62,
+      "type": "product_tag",
+      "localHash": "76dddd64",
+      "remoteHash": "76dddd64",
+      "lastSync": "2026-01-07T11:05:57.610Z"
+    },
+    "content/woocommerce/tags/jeans.md": {
+      "id": 35,
+      "type": "product_tag",
+      "localHash": "-195ddc10",
+      "remoteHash": "-195ddc10",
+      "lastSync": "2026-01-07T11:05:57.611Z"
+    },
+    "content/woocommerce/tags/jumper.md": {
+      "id": 23,
+      "type": "product_tag",
+      "localHash": "-69d3d992",
+      "remoteHash": "-69d3d992",
+      "lastSync": "2026-01-07T11:05:57.611Z"
+    },
+    "content/woocommerce/tags/leather.md": {
+      "id": 51,
+      "type": "product_tag",
+      "localHash": "-1979e79a",
+      "remoteHash": "-1979e79a",
+      "lastSync": "2026-01-07T11:05:57.611Z"
+    },
+    "content/woocommerce/tags/lee.md": {
+      "id": 60,
+      "type": "product_tag",
+      "localHash": "-7e0b8816",
+      "remoteHash": "-7e0b8816",
+      "lastSync": "2026-01-07T11:05:57.611Z"
+    },
+    "content/woocommerce/tags/levis.md": {
+      "id": 36,
+      "type": "product_tag",
+      "localHash": "-66b2d9d7",
+      "remoteHash": "-66b2d9d7",
+      "lastSync": "2026-01-07T11:05:57.611Z"
+    },
+    "content/woocommerce/tags/man.md": {
+      "id": 57,
+      "type": "product_tag",
+      "localHash": "6d578b0e",
+      "remoteHash": "6d578b0e",
+      "lastSync": "2026-01-07T11:05:57.611Z"
+    },
+    "content/woocommerce/tags/nypd.md": {
+      "id": 52,
+      "type": "product_tag",
+      "localHash": "31b04d8b",
+      "remoteHash": "31b04d8b",
+      "lastSync": "2026-01-07T11:05:57.612Z"
+    },
+    "content/woocommerce/tags/party.md": {
+      "id": 37,
+      "type": "product_tag",
+      "localHash": "2631128",
+      "remoteHash": "2631128",
+      "lastSync": "2026-01-07T11:05:57.612Z"
+    },
+    "content/woocommerce/tags/pink.md": {
+      "id": 24,
+      "type": "product_tag",
+      "localHash": "-22895871",
+      "remoteHash": "-22895871",
+      "lastSync": "2026-01-07T11:05:57.612Z"
+    },
+    "content/woocommerce/tags/river-island.md": {
+      "id": 63,
+      "type": "product_tag",
+      "localHash": "1d5f173e",
+      "remoteHash": "1d5f173e",
+      "lastSync": "2026-01-07T11:05:57.612Z"
+    },
+    "content/woocommerce/tags/rock-chick.md": {
+      "id": 50,
+      "type": "product_tag",
+      "localHash": "-139132ea",
+      "remoteHash": "-139132ea",
+      "lastSync": "2026-01-07T11:05:57.612Z"
+    },
+    "content/woocommerce/tags/run.md": {
+      "id": 42,
+      "type": "product_tag",
+      "localHash": "-2f276ef4",
+      "remoteHash": "-2f276ef4",
+      "lastSync": "2026-01-07T11:05:57.612Z"
+    },
+    "content/woocommerce/tags/shoe.md": {
+      "id": 43,
+      "type": "product_tag",
+      "localHash": "-4e96f213",
+      "remoteHash": "-4e96f213",
+      "lastSync": "2026-01-07T11:05:57.613Z"
+    },
+    "content/woocommerce/tags/stars.md": {
+      "id": 44,
+      "type": "product_tag",
+      "localHash": "4d0ca6ba",
+      "remoteHash": "4d0ca6ba",
+      "lastSync": "2026-01-07T11:05:57.613Z"
+    },
+    "content/woocommerce/tags/sweden.md": {
+      "id": 54,
+      "type": "product_tag",
+      "localHash": "a5dcaad",
+      "remoteHash": "a5dcaad",
+      "lastSync": "2026-01-07T11:05:57.613Z"
+    },
+    "content/woocommerce/tags/t-shirt.md": {
+      "id": 58,
+      "type": "product_tag",
+      "localHash": "-42bd436b",
+      "remoteHash": "-42bd436b",
+      "lastSync": "2026-01-07T11:05:57.613Z"
+    },
+    "content/woocommerce/tags/vans.md": {
+      "id": 45,
+      "type": "product_tag",
+      "localHash": "-2671a331",
+      "remoteHash": "-2671a331",
+      "lastSync": "2026-01-07T11:05:57.613Z"
+    },
+    "content/woocommerce/tags/washed-out.md": {
+      "id": 38,
+      "type": "product_tag",
+      "localHash": "-44cf3ad",
+      "remoteHash": "-44cf3ad",
+      "lastSync": "2026-01-07T11:05:57.613Z"
+    },
+    "content/woocommerce/tags/white.md": {
+      "id": 59,
+      "type": "product_tag",
+      "localHash": "-89ee692",
+      "remoteHash": "-89ee692",
+      "lastSync": "2026-01-07T11:05:57.613Z"
+    },
+    "content/woocommerce/tags/women.md": {
+      "id": 39,
+      "type": "product_tag",
+      "localHash": "-f2c3526",
+      "remoteHash": "-f2c3526",
+      "lastSync": "2026-01-07T11:05:57.614Z"
+    }
+  },
+  "lastSync": "2026-01-07T11:05:57.854Z"
+}

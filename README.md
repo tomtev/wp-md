@@ -118,6 +118,27 @@ wp-md uses [WordPress Application Passwords](https://make.wordpress.org/core/202
 4. Copy the generated password
 5. Use it during `wp-md init`
 
+## Configuration
+
+`wp-md init` creates a `.env` file with your credentials. You can also create it manually:
+
+```bash
+# .env
+WP_MD_URL=https://your-site.com
+WP_MD_USER=your-username
+WP_MD_APP_PASSWORD=xxxx xxxx xxxx xxxx xxxx xxxx
+WP_MD_CONTENT_DIR=content
+```
+
+| Variable | Description |
+|----------|-------------|
+| `WP_MD_URL` | Your WordPress site URL |
+| `WP_MD_USER` | WordPress username (admin) |
+| `WP_MD_APP_PASSWORD` | Application password from WordPress |
+| `WP_MD_CONTENT_DIR` | Local folder for markdown files (default: `content`) |
+
+**Note:** Add `.env` to your `.gitignore` to protect credentials.
+
 ## AI Code Agents
 
 When you run `wp-md init`, it creates agent instructions for AI coding assistants:

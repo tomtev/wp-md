@@ -2,8 +2,8 @@ import { readFile, writeFile, access } from 'fs/promises';
 import { join } from 'path';
 
 const ENV_FILE = '.env';
-const CONFIG_FILE = '.wpsyncrc.json';
-const STATE_FILE = '.wpsync-state.json';
+const CONFIG_FILE = '.wpmdrc.json';
+const STATE_FILE = '.wpmd-state.json';
 
 // Using WordPress post type slugs
 export const CONTENT_TYPES = {
@@ -71,7 +71,7 @@ export async function loadConfig() {
     const envContent = await readFile(join(process.cwd(), ENV_FILE), 'utf-8');
     const env = parseEnvFile(envContent);
 
-    if (env.WP_SYNC_URL && env.WP_SYNC_USER && env.WP_SYNC_APP_PASSWORD) {
+    if (env.WP_MD_URL && env.WP_MD_USER && env.WP_MD_APP_PASSWORD) {
       // Load additional config from .wpsyncrc.json if exists
       let extraConfig = {};
       try {
@@ -80,10 +80,10 @@ export async function loadConfig() {
       } catch {}
 
       return {
-        siteUrl: env.WP_SYNC_URL,
-        username: env.WP_SYNC_USER,
-        appPassword: env.WP_SYNC_APP_PASSWORD,
-        contentDir: env.WP_SYNC_CONTENT_DIR || extraConfig.contentDir || 'content',
+        siteUrl: env.WP_MD_URL,
+        username: env.WP_MD_USER,
+        appPassword: env.WP_MD_APP_PASSWORD,
+        contentDir: env.WP_MD_CONTENT_DIR || extraConfig.contentDir || 'content',
       };
     }
   } catch {}
@@ -99,13 +99,13 @@ export async function loadConfig() {
 
 export async function saveConfig(config) {
   // Save credentials to .env
-  const envContent = `# WordPress Sync Configuration
+  const envContent = `# wp-md configuration
 # Add this file to .gitignore to protect credentials
 
-WP_SYNC_URL=${config.siteUrl}
-WP_SYNC_USER=${config.username}
-WP_SYNC_APP_PASSWORD=${config.appPassword}
-WP_SYNC_CONTENT_DIR=${config.contentDir || 'content'}
+WP_MD_URL=${config.siteUrl}
+WP_MD_USER=${config.username}
+WP_MD_APP_PASSWORD=${config.appPassword}
+WP_MD_CONTENT_DIR=${config.contentDir || 'content'}
 `;
 
   await writeFile(join(process.cwd(), ENV_FILE), envContent);
