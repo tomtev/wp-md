@@ -8,7 +8,7 @@
 
 **Create & edit remote WordPress content as markdown files locally.**
 
-Turn your WordPress site into a local folder of markdown files. Edit pages, posts, patterns, templates, and WooCommerce products with your favorite editor or AI coding assistant.
+Turn your WordPress site into a local folder of markdown files. Edit pages, posts, patterns, templates, and WooCommerce products with your favorite editor or AI coding assistant and sync back to remote site with changes.
 
 ## Quick Start
 
